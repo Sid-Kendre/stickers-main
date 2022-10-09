@@ -4,7 +4,7 @@
   "sticker_packs": [
     {
       "identifier": "1",
-      "name": "Couple Collection 1",
+      "name": "Couple Sticker Pack 1",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -123,7 +123,7 @@
     },
     {
       "identifier": "2",
-      "name": "Couple Collection 2",
+      "name": "Couple Sticker Pack 2",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -214,7 +214,7 @@
     },
     {
       "identifier": "9",
-      "name": "Couple Collection 3",
+      "name": "Couple Sticker Pack 3",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -354,7 +354,7 @@
     },
     {
       "identifier": "3",
-      "name": "Couple collection 4",
+      "name": "Couple Sticker Pack 4",
       "publisher": "Couple",
       "tray_image_file": "title2.png",
       "image_data_version": "1",
@@ -473,7 +473,7 @@
     },
     {
       "identifier": "11",
-      "name": "Couple Collection 5",
+      "name": "Couple Sticker Pack 5",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -627,7 +627,7 @@
     },
     {
       "identifier": "4",
-      "name": "Couple collection 6",
+      "name": "Couple Sticker Pack 6",
       "publisher": "Couple",
       "tray_image_file": "Title.png",
       "image_data_version": "1",
@@ -746,7 +746,7 @@
     },
     {
       "identifier": "5",
-      "name": "Couple collection 7",
+      "name": "Couple Sticker Pack 7",
       "publisher": "Couple",
       "tray_image_file": "Title.png",
       "image_data_version": "1",
@@ -844,7 +844,7 @@
     },
     {
       "identifier": "10",
-      "name": "Couple collection 8",
+      "name": "Couple Sticker Pack 8",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -935,7 +935,7 @@
     },
     {
       "identifier": "6",
-      "name": "Couple Collection 9",
+      "name": "Couple Sticker Pack 9",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -1089,7 +1089,7 @@
     },
     {
       "identifier": "12",
-      "name": "Couple Collection 10",
+      "name": "Couple Sticker Pack 10",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -1222,7 +1222,7 @@
     },
     {
       "identifier": "7",
-      "name": "Couple Collection 11",
+      "name": "Couple Sticker Pack 11",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -1376,7 +1376,7 @@
     },
     {
       "identifier": "8",
-      "name": "Couple Collection 12",
+      "name": "Couple Sticker Pack 12",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -1530,7 +1530,7 @@
     },
     {
       "identifier": "13",
-      "name": "Couple Collection 13",
+      "name": "Couple Sticker Pack 13",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
@@ -1684,7 +1684,7 @@
     },
     {
       "identifier": "14",
-      "name": "Couple Collection 14",
+      "name": "Couple Sticker Pack 14",
       "publisher": "Couple",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
