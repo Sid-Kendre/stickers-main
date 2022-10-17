@@ -129,7 +129,7 @@
             android:id="@+id/already_added_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/details_pack_already_added"
             android:textColor="#9B9B9B"
@@ -177,7 +177,21 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sticker_pack_details_tap_to_preview" />
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                tools:ignore="MissingConstraints">
+            </com.google.android.gms.ads.AdView>
+
         </LinearLayout>
+
 
 
     </FrameLayout>
