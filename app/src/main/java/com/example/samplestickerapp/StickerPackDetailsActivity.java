@@ -25,11 +25,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.lang.ref.WeakReference;
 
@@ -60,7 +62,8 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
     private StickerPack stickerPack;
     private View divider;
     private WhiteListCheckAsyncTask whiteListCheckAsyncTask;
-    private AdView mAdView;
+    private AdView mAdView, mAdView1;
+    private InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +107,38 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
         });
 
         mAdView = findViewById(R.id.adView);
+        mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mAdView1.loadAd(adRequest);
+
+        // Initialize the Mobile Ads SDK
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+        AdRequest adIRequest = new AdRequest.Builder().build();
+
+        // Prepare the Interstitial Ad Activity
+        interstitial = new InterstitialAd(StickerPackDetailsActivity.this);
+
+        // Insert the Ad Unit ID
+        interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
+
+        // Interstitial Ad load Request
+        interstitial.loadAd(adIRequest);
+
+        // Prepare an Interstitial Ad Listener
+        interstitial.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                // Call displayInterstitial() function when the Ad loads
+                displayInterstitial();
+            }
+        });
+    }
+
+    public void displayInterstitial() {
+        // If Interstitial Ads are loaded then show else show nothing.
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+        }
     }
 
     private void launchInfoActivity(String publisherWebsite, String publisherEmail, String privacyPolicyWebsite, String licenseAgreementWebsite, String trayIconUriString) {
