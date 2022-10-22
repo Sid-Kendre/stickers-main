@@ -5,7 +5,7 @@
     {
       "identifier": "1",
       "name": "Couple Sticker Pack 1",
-      "publisher": "Couple",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -124,7 +124,7 @@
     {
       "identifier": "2",
       "name": "Couple Sticker Pack 2",
-      "publisher": "Couple",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -215,7 +215,7 @@
     {
       "identifier": "9",
       "name": "Couple Sticker Pack 3",
-      "publisher": "Couple",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -353,10 +353,10 @@
       ]
     },
     {
-      "identifier": "3",
+      "identifier": "15",
       "name": "Couple Sticker Pack 4",
-      "publisher": "Couple",
-      "tray_image_file": "title2.png",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
       "publisher_email": "skstudioapp7@gmail.com",
@@ -367,7 +367,7 @@
         {
           "image_file": "1.webp",
           "emojis": [
-            "1",
+            "☕",
             "🙂"
           ]
         },
@@ -451,22 +451,91 @@
         {
           "image_file": "13.webp",
           "emojis": [
-            "😡",
-            "😠"
+            "❓",
+            "🤔"
           ]
         },
         {
           "image_file": "14.webp",
           "emojis": [
-            "😡",
-            "😠"
+            "🌈",
+            "😜"
           ]
         },
         {
           "image_file": "15.webp",
           "emojis": [
-            "😡",
-            "😠"
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
           ]
         }
       ]
@@ -474,7 +543,7 @@
     {
       "identifier": "11",
       "name": "Couple Sticker Pack 5",
-      "publisher": "Couple",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -621,231 +690,14 @@
           "emojis": [
             "💻",
             "😩"
-          ]
-        }
-      ]
-    },
-    {
-      "identifier": "4",
-      "name": "Couple Sticker Pack 6",
-      "publisher": "Couple",
-      "tray_image_file": "Title.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "16.webp",
-          "emojis": [
-            "1",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "17.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "18.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "19.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "20.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "21.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "22.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "23.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "24.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "25.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "26.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "27.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "28.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "29.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "30.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        }
-      ]
-    },
-    {
-      "identifier": "5",
-      "name": "Couple Sticker Pack 7",
-      "publisher": "Couple",
-      "tray_image_file": "Title.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "30.webp",
-          "emojis": [
-            "1",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "31.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "32.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "33.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "34.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "35.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "36.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "37.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "38.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "39.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "40.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "41.webp",
-          "emojis": [
-            "😡",
-            "😠"
           ]
         }
       ]
     },
     {
       "identifier": "10",
-      "name": "Couple Sticker Pack 8",
-      "publisher": "Couple",
+      "name": "Couple Sticker Pack 6",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -934,604 +786,9 @@
       ]
     },
     {
-      "identifier": "6",
-      "name": "Couple Sticker Pack 9",
-      "publisher": "Couple",
-      "tray_image_file": "Baby_couple.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "1.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "2.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "3.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "4.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "5.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "6.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "7.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "8.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "9.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "10.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "11.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "12.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "13.webp",
-          "emojis": [
-            "❓",
-            "🤔"
-          ]
-        },
-        {
-          "image_file": "14.webp",
-          "emojis": [
-            "🌈",
-            "😜"
-          ]
-        },
-        {
-          "image_file": "15.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        },
-        {
-          "image_file": "16.webp",
-          "emojis": [
-            "😡",
-            "😤"
-          ]
-        },
-        {
-          "image_file": "17.webp",
-          "emojis": [
-            "😩",
-            "😨"
-          ]
-        },
-        {
-          "image_file": "18.webp",
-          "emojis": [
-            "💻",
-            "🌃"
-          ]
-        },
-        {
-          "image_file": "19.webp",
-          "emojis": [
-            "🎉",
-            "✨"
-          ]
-        },
-        {
-          "image_file": "20.webp",
-          "emojis": [
-            "🤮",
-            "👎"
-          ]
-        }
-      ]
-    },
-    {
-      "identifier": "12",
-      "name": "Couple Sticker Pack 10",
-      "publisher": "Couple",
-      "tray_image_file": "Baby_couple.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "1.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "2.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "3.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "4.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "5.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "6.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "7.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "8.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "9.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "10.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "11.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "12.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "13.webp",
-          "emojis": [
-            "❓",
-            "🤔"
-          ]
-        },
-        {
-          "image_file": "14.webp",
-          "emojis": [
-            "🌈",
-            "😜"
-          ]
-        },
-        {
-          "image_file": "15.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        },
-        {
-          "image_file": "16.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        },
-        {
-          "image_file": "17.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        }
-      ]
-    },
-    {
-      "identifier": "7",
-      "name": "Couple Sticker Pack 11",
-      "publisher": "Couple",
-      "tray_image_file": "Baby_couple.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "21.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "22.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "23.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "24.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "25.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "26.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "27.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "28.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "29.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "30.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "31.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "32.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "33.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "34.webp",
-          "emojis": [
-            "❓",
-            "🤔"
-          ]
-        },
-        {
-          "image_file": "35.webp",
-          "emojis": [
-            "🌈",
-            "😜"
-          ]
-        },
-        {
-          "image_file": "36.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        },
-        {
-          "image_file": "37.webp",
-          "emojis": [
-            "😡",
-            "😤"
-          ]
-        },
-        {
-          "image_file": "38.webp",
-          "emojis": [
-            "😩",
-            "😨"
-          ]
-        },
-        {
-          "image_file": "39.webp",
-          "emojis": [
-            "💻",
-            "🌃"
-          ]
-        },
-        {
-          "image_file": "40.webp",
-          "emojis": [
-            "💻",
-            "🌃"
-          ]
-        }
-      ]
-    },
-    {
-      "identifier": "8",
-      "name": "Couple Sticker Pack 12",
-      "publisher": "Couple",
-      "tray_image_file": "Baby_couple.png",
-      "image_data_version": "1",
-      "avoid_cache": false,
-      "publisher_email": "skstudioapp7@gmail.com",
-      "publisher_website": "",
-      "privacy_policy_website": "",
-      "license_agreement_website": "",
-      "stickers": [
-        {
-          "image_file": "41.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "42.webp",
-          "emojis": [
-            "☕",
-            "🙂"
-          ]
-        },
-        {
-          "image_file": "43.webp",
-          "emojis": [
-            "😄",
-            "😀"
-          ]
-        },
-        {
-          "image_file": "44.webp",
-          "emojis": [
-            "😆",
-            "😂"
-          ]
-        },
-        {
-          "image_file": "45.webp",
-          "emojis": [
-            "😩",
-            "😰"
-          ]
-        },
-        {
-          "image_file": "46.webp",
-          "emojis": [
-            "😭",
-            "💧"
-          ]
-        },
-        {
-          "image_file": "47.webp",
-          "emojis": [
-            "😍",
-            "♥"
-          ]
-        },
-        {
-          "image_file": "48.webp",
-          "emojis": [
-            "💔",
-            "👎"
-          ]
-        },
-        {
-          "image_file": "49.webp",
-          "emojis": [
-            "😍",
-            "💑"
-          ]
-        },
-        {
-          "image_file": "50.webp",
-          "emojis": [
-            "😘",
-            "🍪"
-          ]
-        },
-        {
-          "image_file": "51.webp",
-          "emojis": [
-            "🤔",
-            "😐"
-          ]
-        },
-        {
-          "image_file": "52.webp",
-          "emojis": [
-            "😱",
-            "😵"
-          ]
-        },
-        {
-          "image_file": "53.webp",
-          "emojis": [
-            "😡",
-            "😠"
-          ]
-        },
-        {
-          "image_file": "54.webp",
-          "emojis": [
-            "❓",
-            "🤔"
-          ]
-        },
-        {
-          "image_file": "55.webp",
-          "emojis": [
-            "🌈",
-            "😜"
-          ]
-        },
-        {
-          "image_file": "56.webp",
-          "emojis": [
-            "💻",
-            "😩"
-          ]
-        },
-        {
-          "image_file": "57.webp",
-          "emojis": [
-            "😡",
-            "😤"
-          ]
-        },
-        {
-          "image_file": "58.webp",
-          "emojis": [
-            "😩",
-            "😨"
-          ]
-        },
-        {
-          "image_file": "59.webp",
-          "emojis": [
-            "💻",
-            "🌃"
-          ]
-        },
-        {
-          "image_file": "60.webp",
-          "emojis": [
-            "💻",
-            "🌃"
-          ]
-        }
-      ]
-    },
-    {
       "identifier": "13",
-      "name": "Couple Sticker Pack 13",
-      "publisher": "Couple",
+      "name": "Couple Sticker Pack 7",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -1684,8 +941,8 @@
     },
     {
       "identifier": "14",
-      "name": "Couple Sticker Pack 14",
-      "publisher": "Couple",
+      "name": "Couple Sticker Pack 8",
+      "publisher": "SK Studio",
       "tray_image_file": "Baby_couple.png",
       "image_data_version": "1",
       "avoid_cache": false,
@@ -1839,6 +1096,1928 @@
           "emojis": [
             "💻",
             "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "16",
+      "name": "Couple Sticker Pack 9",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "17",
+      "name": "Couple Sticker Pack 10",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "18",
+      "name": "Couple Sticker Pack 11",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "26.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "27.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "19",
+      "name": "Couple Sticker Pack 12",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "26.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "27.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "28.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "20",
+      "name": "Couple Sticker Pack 13",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "25.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "26.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "27.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },{
+          "image_file": "28.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "6",
+      "name": "Couple Sticker Pack 14",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "😡",
+            "😤"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "😩",
+            "😨"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "💻",
+            "🌃"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "🎉",
+            "✨"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "🤮",
+            "👎"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "12",
+      "name": "Couple Sticker Pack 15",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "7",
+      "name": "Couple Sticker Pack 16",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "25.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "26.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "27.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "28.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "29.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "30.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "31.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "32.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "33.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "34.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "35.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "36.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "37.webp",
+          "emojis": [
+            "😡",
+            "😤"
+          ]
+        },
+        {
+          "image_file": "38.webp",
+          "emojis": [
+            "😩",
+            "😨"
+          ]
+        },
+        {
+          "image_file": "39.webp",
+          "emojis": [
+            "💻",
+            "🌃"
+          ]
+        },
+        {
+          "image_file": "40.webp",
+          "emojis": [
+            "💻",
+            "🌃"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "8",
+      "name": "Couple Sticker Pack 17",
+      "publisher": "SK Studio",
+      "tray_image_file": "Baby_couple.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "41.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "42.webp",
+          "emojis": [
+            "☕",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "43.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "44.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "45.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "46.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "47.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "48.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "49.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "50.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "51.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "52.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "53.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "54.webp",
+          "emojis": [
+            "❓",
+            "🤔"
+          ]
+        },
+        {
+          "image_file": "55.webp",
+          "emojis": [
+            "🌈",
+            "😜"
+          ]
+        },
+        {
+          "image_file": "56.webp",
+          "emojis": [
+            "💻",
+            "😩"
+          ]
+        },
+        {
+          "image_file": "57.webp",
+          "emojis": [
+            "😡",
+            "😤"
+          ]
+        },
+        {
+          "image_file": "58.webp",
+          "emojis": [
+            "😩",
+            "😨"
+          ]
+        },
+        {
+          "image_file": "59.webp",
+          "emojis": [
+            "💻",
+            "🌃"
+          ]
+        },
+        {
+          "image_file": "60.webp",
+          "emojis": [
+            "💻",
+            "🌃"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "3",
+      "name": "Couple Sticker Pack 18",
+      "publisher": "SK Studio",
+      "tray_image_file": "title2.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "1.webp",
+          "emojis": [
+            "1",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "2.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "3.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "4.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "5.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "6.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "7.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "8.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "9.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "10.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "11.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "12.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "13.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "14.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "15.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "4",
+      "name": "Couple Sticker Pack 19",
+      "publisher": "SK Studio",
+      "tray_image_file": "Title.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "16.webp",
+          "emojis": [
+            "1",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "17.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "18.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "19.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "20.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "21.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "22.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "23.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "24.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "25.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "26.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "27.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "28.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "29.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        },
+        {
+          "image_file": "30.webp",
+          "emojis": [
+            "😡",
+            "😠"
+          ]
+        }
+      ]
+    },
+    {
+      "identifier": "5",
+      "name": "Couple Sticker Pack 20",
+      "publisher": "SK Studio",
+      "tray_image_file": "Title.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "publisher_email": "skstudioapp7@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "30.webp",
+          "emojis": [
+            "1",
+            "🙂"
+          ]
+        },
+        {
+          "image_file": "31.webp",
+          "emojis": [
+            "😄",
+            "😀"
+          ]
+        },
+        {
+          "image_file": "32.webp",
+          "emojis": [
+            "😆",
+            "😂"
+          ]
+        },
+        {
+          "image_file": "33.webp",
+          "emojis": [
+            "😩",
+            "😰"
+          ]
+        },
+        {
+          "image_file": "34.webp",
+          "emojis": [
+            "😭",
+            "💧"
+          ]
+        },
+        {
+          "image_file": "35.webp",
+          "emojis": [
+            "😍",
+            "♥"
+          ]
+        },
+        {
+          "image_file": "36.webp",
+          "emojis": [
+            "💔",
+            "👎"
+          ]
+        },
+        {
+          "image_file": "37.webp",
+          "emojis": [
+            "😍",
+            "💑"
+          ]
+        },
+        {
+          "image_file": "38.webp",
+          "emojis": [
+            "😘",
+            "🍪"
+          ]
+        },
+        {
+          "image_file": "39.webp",
+          "emojis": [
+            "🤔",
+            "😐"
+          ]
+        },
+        {
+          "image_file": "40.webp",
+          "emojis": [
+            "😱",
+            "😵"
+          ]
+        },
+        {
+          "image_file": "41.webp",
+          "emojis": [
+            "😡",
+            "😠"
           ]
         }
       ]

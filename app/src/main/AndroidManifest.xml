@@ -2,7 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.samplestickerapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--
+ to be able to query the whitelist status in WhatsApp 
+     https://developer.android.com/training/basics/intents/package-visibility#package-name
+    -->
+    <queries>
+        <package android:name="com.whatsapp" />
+        <package android:name="com.whatsapp.w4b" />
+    </queries>
 
     <application
         android:name=".StickerApplication"
@@ -14,17 +23,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6979979912689100~2520356241"/>
+            android:value="ca-app-pub-6979979912689100~2520356241" />
 
-        <activity android:name=".EntryActivity"
+        <activity
+            android:name=".EntryActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".StickerPackListActivity" />
         <activity
@@ -53,10 +73,4 @@
             android:readPermission="com.whatsapp.sticker.READ" />
     </application>
 
-    <!-- to be able to query the whitelist status in WhatsApp 
-     https://developer.android.com/training/basics/intents/package-visibility#package-name -->
-    <queries>
-        <package android:name="com.whatsapp" />
-        <package android:name="com.whatsapp.w4b" />
-    </queries>
 </manifest>
