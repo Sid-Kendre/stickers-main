@@ -7,7 +7,7 @@ android {
     }
     compileSdkVersion 32
     defaultConfig {
-        applicationId "com.example.WAstickersApp"
+        applicationId "com.skstudio.WAstickersApp"
         minSdkVersion 19
         targetSdkVersion 32
         multiDexEnabled true
