@@ -1,4 +1,4 @@
-package com.example.samplestickerapp;
+package com.example.WAstickerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
