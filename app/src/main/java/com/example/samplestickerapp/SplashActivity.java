@@ -21,7 +21,9 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
         //this will bind your MainActivity.class file with activity_main.
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
