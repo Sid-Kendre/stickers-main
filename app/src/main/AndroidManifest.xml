@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.WAstickerapp">
+    package="com.skstudio.WAstickersApp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
     <!--
  to be able to query the whitelist status in WhatsApp 
      https://developer.android.com/training/basics/intents/package-visibility#package-name
@@ -52,7 +54,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.WAstickerapp.StickerPackListActivity" />
+                android:value="com.skstudio.WAstickersApp.StickerPackListActivity" />
         </activity>
         <activity
             android:name=".StickerPackInfoActivity"
@@ -61,7 +63,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.WAstickerapp.StickerPackDetailsActivity" />
+                android:value="com.skstudio.WAstickersApp.StickerPackDetailsActivity" />
         </activity>
 
         <provider
