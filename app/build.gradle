@@ -1,19 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.skstudio.WAstickersApp"  // Add this to define the namespace
+    namespace "com.skstudio.WAstickersApp"
     compileSdkVersion 35
 
     defaultConfig {
-        applicationId "com.skstudio.WAstickersApp" // Replace this with your desired namespace
+        applicationId "com.skstudio.WAstickersApp"
         minSdkVersion 21
-        targetSdkVersion 35  // If you want to target API 35
-        versionCode 11
-        versionName "1.1.7"
+        targetSdkVersion 35
+        versionCode 13
+        versionName "13.1.7"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // Define ContentProvider authority
         def contentProviderAuthority = applicationId + ".stickercontentprovider"
         manifestPlaceholders = [contentProviderAuthority: contentProviderAuthority]
         buildConfigField("String", "CONTENT_PROVIDER_AUTHORITY", "\"${contentProviderAuthority}\"")
@@ -28,6 +27,9 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,21 +40,25 @@ android {
     }
 
     aaptOptions {
-        noCompress "webp" // Preserve .webp files without compression
+        noCompress "webp"
     }
 
     buildFeatures {
-        buildConfig true // Enable BuildConfig generation
+        buildConfig true
     }
 
     packagingOptions {
         exclude 'lib/*/libnative-imagetranscoder.so'
         exclude 'lib/*/libnative-filters.so'
         jniLibs {
-            useLegacyPackaging = false
+            // Use uncompressed and 16KB aligned libraries where possible.
+            // If still getting errors with AGP 8.1.4, keeping this as true 
+            // will compress them to allow "backcompat mode" on 16KB devices.
+            useLegacyPackaging = true
         }
     }
 }
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.7.0'
@@ -62,17 +68,19 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.gms:play-services-ads:22.4.0'
 
-    // Fresco dependencies for image handling
-    def fresco_version = '3.0.0' // Updated version
+    // Fresco upgraded to 3.6.0 for 16KB page size support
+    def fresco_version = '3.6.0'
     implementation "com.facebook.fresco:fresco:$fresco_version"
     implementation "com.facebook.fresco:webpsupport:$fresco_version"
     implementation "com.facebook.fresco:animated-webp:$fresco_version"
     implementation "com.facebook.fresco:animated-base:$fresco_version"
 
-    // Explicitly add SoLoader to avoid versioning issues
-    implementation 'com.facebook.soloader:soloader:0.10.5'
+    // SoLoader upgraded to 0.12.1 for 16KB support
+    implementation 'com.facebook.soloader:soloader:0.12.1'
 
-    // Testing dependencies
+    // Missing dependency for Facebook annotations to resolve "Mode.STRICT" warnings
+    implementation 'com.facebook.infer.annotation:infer-annotation:0.18.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.6.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
@@ -80,6 +88,6 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)  // Ensure you need Java 17; otherwise, default to Java 8
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }

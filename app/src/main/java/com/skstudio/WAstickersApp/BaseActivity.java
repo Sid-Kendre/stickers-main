@@ -10,6 +10,7 @@ package com.skstudio.WAstickersApp;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -17,12 +18,84 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected InterstitialAd mInterstitialAd;
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
+
+    // ✅ ----------- ADS CODE HERE (CORRECT PLACE) -----------
+
+    protected void loadInterstitialAdTest() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,
+                "ca-app-pub-6979979912689100/1824239717",
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                    }
+                });
+    }
+
+    protected void handleClickWithAd(Runnable action) {
+
+        android.content.SharedPreferences prefs =
+                getSharedPreferences("ads", MODE_PRIVATE);
+        int clickCount = prefs.getInt("click", 0);
+        clickCount++;
+
+
+        if (clickCount >= 10) {
+
+            if (mInterstitialAd != null) {
+
+                prefs.edit().putInt("click", 0).apply(); // reset only if shown
+
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        mInterstitialAd = null;
+                        loadInterstitialAdTest();
+                        action.run();
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                        action.run();
+                    }
+                });
+
+                mInterstitialAd.show(this);
+
+                return;
+            }
+        }
+
+// save count if ad not shown
+        prefs.edit().putInt("click", clickCount).apply();
+        action.run();
+    }
+
+    // ✅ ----------- YOUR EXISTING DIALOG (KEEP AS IS) -----------
 
     public static final class MessageDialogFragment extends DialogFragment {
         private static final String ARG_TITLE_ID = "title_id";

@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -94,6 +95,17 @@ public class StickerPackInfoActivity extends BaseActivity {
         setupTextView(privacyPolicy, R.id.privacy_policy);
 
         setupTextView(licenseAgreement, R.id.license_agreement);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                handleClickWithAd(() -> {
+                    finish();
+                });
+
+            }
+        });
     }
 
     private void loadInterstitialAd() {

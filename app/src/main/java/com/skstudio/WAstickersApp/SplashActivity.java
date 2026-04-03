@@ -40,6 +40,10 @@ public class SplashActivity extends AppCompatActivity {
 
         startDotAnimation();
         checkInternetAndProceed();
+        getSharedPreferences("ads", MODE_PRIVATE)
+                .edit()
+                .putInt("click", 0)
+                .apply();
     }
 
     // ✅ Internet check loop

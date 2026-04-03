@@ -131,7 +131,7 @@ class StickerPackValidator {
         if (TextUtils.isEmpty(sticker.imageFileName)) {
             throw new IllegalStateException("no file path for sticker, sticker pack identifier:" + identifier);
         }
-//        validateStickerFile(context, identifier, sticker.imageFileName, animatedStickerPack);
+       validateStickerFile(context, identifier, sticker.imageFileName, animatedStickerPack);
     }
 
     private static void validateStickerFile(@NonNull Context context, @NonNull String identifier, @NonNull final String fileName, final boolean animatedStickerPack) throws IllegalStateException {

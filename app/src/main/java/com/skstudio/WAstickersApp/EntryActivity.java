@@ -10,6 +10,7 @@ package com.skstudio.WAstickersApp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,6 @@ import java.util.ArrayList;
 public class EntryActivity extends BaseActivity {
     private View progressBar;
     private LoadListAsyncTask loadListAsyncTask;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

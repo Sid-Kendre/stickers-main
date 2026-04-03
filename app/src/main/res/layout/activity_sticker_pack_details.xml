@@ -111,8 +111,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sticker_details_expanded_sticker"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
             android:scaleType="centerCrop"
             android:visibility="invisible" />
 
@@ -136,50 +136,12 @@
         android:layout_marginRight="@dimen/preview_side_margin"
         android:minHeight="60dp">
 
-        <TextView
-            android:id="@+id/already_added_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/details_pack_already_added"
-            android:textColor="#9B9B9B"
-            android:textSize="14sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/add_to_whatsapp_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/btn_green"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/StickerPreviewButtonText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:clickable="false"
-                    android:drawableStart="@drawable/sticker_3rdparty_wa"
-                    android:drawableLeft="@drawable/sticker_3rdparty_wa"
-                    android:drawablePadding="8dp"
-                    android:focusable="false"
-                    android:foreground="@android:color/transparent"
-                    android:text="@string/add_to_whatsapp" />
-
-
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/sticker_pack_details_tap_to_preview"
@@ -188,6 +150,68 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/sticker_pack_details_tap_to_preview" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+                <FrameLayout
+                    android:id="@+id/add_to_whatsapp_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/btn_green"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/StickerPreviewButtonText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:drawableStart="@drawable/sticker_3rdparty_wa"
+                        android:drawableLeft="@drawable/sticker_3rdparty_wa"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:foreground="@android:color/transparent"
+                        android:text="@string/add_to_whatsapp" />
+
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/remove_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/btn_red"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/StickerPreviewButtonText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:drawableStart="@drawable/sticker_3rdparty_wa"
+                        android:drawableLeft="@drawable/sticker_3rdparty_wa"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:foreground="@android:color/transparent"
+                        android:text="Remove from Whatsapp" />
+
+
+                </FrameLayout>
+            </FrameLayout>
+
 
             <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"

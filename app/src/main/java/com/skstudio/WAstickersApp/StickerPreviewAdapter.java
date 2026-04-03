@@ -76,7 +76,15 @@ public class StickerPreviewAdapter extends RecyclerView.Adapter<StickerPreviewVi
     public void onBindViewHolder(@NonNull final StickerPreviewViewHolder stickerPreviewViewHolder, final int i) {
         stickerPreviewViewHolder.stickerPreviewView.setImageResource(errorResource);
         stickerPreviewViewHolder.stickerPreviewView.setImageURI(StickerPackLoader.getStickerAssetUri(stickerPack.identifier, stickerPack.getStickers().get(i).imageFileName));
-        stickerPreviewViewHolder.stickerPreviewView.setOnClickListener(v -> expandPreview(i, stickerPreviewViewHolder.stickerPreviewView));
+        stickerPreviewViewHolder.stickerPreviewView.setOnClickListener(v -> {
+            if (v.getContext() instanceof BaseActivity) {
+                ((BaseActivity) v.getContext()).handleClickWithAd(() -> {
+                    expandPreview(i, stickerPreviewViewHolder.stickerPreviewView);
+                });
+            } else {
+                expandPreview(i, stickerPreviewViewHolder.stickerPreviewView);
+            }
+        });
     }
 
     @Override

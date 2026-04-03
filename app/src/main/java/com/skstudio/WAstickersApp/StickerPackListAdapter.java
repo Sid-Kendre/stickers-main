@@ -19,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -58,10 +60,19 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackList
 
         viewHolder.titleView.setText(pack.name);
         viewHolder.container.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), StickerPackDetailsActivity.class);
-            intent.putExtra(StickerPackDetailsActivity.EXTRA_SHOW_UP_BUTTON, true);
-            intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_DATA, pack);
-            view.getContext().startActivity(intent);
+
+            Runnable action = () -> {
+                Intent intent = new Intent(view.getContext(), StickerPackDetailsActivity.class);
+                intent.putExtra(StickerPackDetailsActivity.EXTRA_SHOW_UP_BUTTON, true);
+                intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_DATA, pack);
+                view.getContext().startActivity(intent);
+            };
+
+            if (view.getContext() instanceof BaseActivity) {
+                ((BaseActivity) view.getContext()).handleClickWithAd(action);
+            } else {
+                action.run();
+            }
         });
         viewHolder.imageRowView.removeAllViews();
         //if this sticker pack contains less stickers than the max, then take the smaller size.
@@ -84,15 +95,53 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackList
     private void setAddButtonAppearance(ImageView addButton, StickerPack pack) {
         if (pack.getIsWhitelisted()) {
             addButton.setImageResource(R.drawable.sticker_3rdparty_added);
-            addButton.setClickable(false);
-            addButton.setOnClickListener(null);
-            setBackground(addButton, null);
-        } else {
-            addButton.setImageResource(R.drawable.sticker_3rdparty_add);
-            addButton.setOnClickListener(v -> onAddButtonClickedListener.onAddButtonClicked(pack));
+
+            // 1. Make it clickable by performing the same action as the row container
+            addButton.setOnClickListener(v -> {
+                AlertDialog dialog = new AlertDialog.Builder(v.getContext())
+                        .setTitle("Remove Sticker Pack")
+                        .setMessage("Remove this pack?")
+                        .setPositiveButton("Remove", null) // set later
+                        .setNegativeButton("Cancel", null)
+                        .create();
+
+                dialog.show();
+                // ✅ Force visible colors (VERY IMPORTANT)
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                        .setTextColor(v.getContext().getResources().getColor(android.R.color.holo_red_dark));
+
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                        .setTextColor(v.getContext().getResources().getColor(android.R.color.black));
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v1 -> {
+                    Toast.makeText(v1.getContext(), "Successfully removed", Toast.LENGTH_SHORT).show();
+                    addButton.setImageResource(R.drawable.sticker_3rdparty_add);
+                    addButton.setOnClickListener(v3 -> onAddButtonClickedListener.onAddButtonClicked(pack));
+
+                    TypedValue outValue = new TypedValue();
+                    addButton.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+                    addButton.setBackgroundResource(outValue.resourceId);
+                    addButton.setContentDescription("Add sticker pack");
+                    dialog.dismiss();
+                });
+            });
+
+            // 2. Add visual feedback (ripple) instead of setBackground(addButton, null)
             TypedValue outValue = new TypedValue();
             addButton.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
             addButton.setBackgroundResource(outValue.resourceId);
+
+            // 3. Accessibility: Tell screen readers it's already added
+            addButton.setContentDescription("Sticker pack already added");
+
+        } else {
+            addButton.setImageResource(R.drawable.sticker_3rdparty_add);
+            addButton.setOnClickListener(v -> onAddButtonClickedListener.onAddButtonClicked(pack));
+
+            TypedValue outValue = new TypedValue();
+            addButton.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            addButton.setBackgroundResource(outValue.resourceId);
+            addButton.setContentDescription("Add sticker pack");
         }
     }
 

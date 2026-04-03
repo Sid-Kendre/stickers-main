@@ -71,6 +71,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         mAdView1.loadAd(adRequest);
         MobileAds.initialize(this, initializationStatus -> {});
         loadRewardedAd();
+        loadInterstitialAdTest();
     }
 
     @Override

@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import androidx.appcompat.app.AlertDialog;
 
 import java.lang.ref.WeakReference;
 
@@ -82,6 +84,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
     private View loadingOverlay;
     private String pendingIdentifier;
     private String pendingName;
+    View removeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
         SimpleDraweeView expandedStickerView = findViewById(R.id.sticker_details_expanded_sticker);
 
         addButton = findViewById(R.id.add_to_whatsapp_button);
-        alreadyAddedText = findViewById(R.id.already_added_text);
+        removeButton = findViewById(R.id.remove_button);
         layoutManager = new GridLayoutManager(this, 1);
         recyclerView = findViewById(R.id.sticker_list);
         recyclerView.setLayoutManager(layoutManager);
@@ -135,11 +138,22 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
             }
         });
         loadRewardedAd();
+        loadInterstitialAdTest();
         mAdView = findViewById(R.id.adView);
         mAdView1 = findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                handleClickWithAd(() -> {
+                    finish();
+                });
+            }
+        });
     }
 
     private void showLoader() {
@@ -287,7 +301,10 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
     private final ViewTreeObserver.OnGlobalLayoutListener pageLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
-            setNumColumns(recyclerView.getWidth() / recyclerView.getContext().getResources().getDimensionPixelSize(R.dimen.sticker_pack_details_image_size));
+            int calculated = recyclerView.getWidth() /
+                    getResources().getDimensionPixelSize(R.dimen.sticker_pack_details_image_size);
+
+            setNumColumns(Math.min(calculated, 4)); // 🔥 max 4
         }
     };
 
@@ -338,17 +355,90 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
     }
 
     private void updateAddUI(Boolean isWhitelisted) {
+
+        View removeButton = findViewById(R.id.remove_button);
+
         if (isWhitelisted) {
+
             addButton.setVisibility(View.GONE);
-            alreadyAddedText.setVisibility(View.VISIBLE);
-            findViewById(R.id.sticker_pack_details_tap_to_preview).setVisibility(View.GONE);
+            removeButton.setVisibility(View.VISIBLE);
+
+            removeButton.setOnClickListener(v -> {
+                showRemoveDialog();
+            });
+
         } else {
+
             addButton.setVisibility(View.VISIBLE);
-            alreadyAddedText.setVisibility(View.GONE);
-            findViewById(R.id.sticker_pack_details_tap_to_preview).setVisibility(View.VISIBLE);
+            removeButton.setVisibility(View.GONE);
         }
     }
 
+    private void openWhatsAppStickerPage() {
+
+        try {
+            // Try direct intent (some devices work)
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setPackage("com.whatsapp");
+            startActivity(intent);
+
+            Toast.makeText(this,
+                    "Go to Stickers > My Stickers and remove it",
+                    Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+
+            // fallback
+            Intent intent = getPackageManager()
+                    .getLaunchIntentForPackage("com.whatsapp");
+
+            if (intent != null) {
+                startActivity(intent);
+                Toast.makeText(this,
+                        "Open WhatsApp → Stickers → My Stickers",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void showRemoveDialog() {
+
+        // ⚠️ Hide loader if visible
+        loadingOverlay.setVisibility(View.GONE);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Remove Sticker Pack")
+                .setMessage("Remove this pack?")
+                .setPositiveButton("Remove", null) // set later
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.show();
+
+        // ✅ Now buttons exist → set actions
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+
+
+            Toast.makeText(this, "Successfully removed", Toast.LENGTH_SHORT).show();
+
+            addButton.setVisibility(View.VISIBLE);
+            loadRewardedAd();
+            findViewById(R.id.remove_button).setVisibility(View.GONE);
+            addButton.setEnabled(true);
+            stickerPack.setIsWhitelisted(false); // VERY IMPORTANT
+            dialog.dismiss();
+        });
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // ✅ Force visible colors (VERY IMPORTANT)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(getResources().getColor(android.R.color.black));
+    }
     static class WhiteListCheckAsyncTask extends AsyncTask<StickerPack, Void, Boolean> {
         private final WeakReference<StickerPackDetailsActivity> stickerPackDetailsActivityWeakReference;
 
