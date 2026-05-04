@@ -61,10 +61,8 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private ArrayList<StickerPack> stickerPackList;
     private AdView mAdView;
     private AdView mAdView1;
-    private RewardedAd rewardedAd;
-    private boolean isAdShowing = false;
-    private boolean isRewardEarned = false;
     private DrawerLayout drawerLayout;
+    private RewardedAdManager rewardedAdManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +70,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         setContentView(R.layout.activity_sticker_pack_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        rewardedAdManager = RewardedAdManager.getInstance();
+        rewardedAdManager.loadAd(this);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -111,7 +112,6 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest);
         MobileAds.initialize(this, initializationStatus -> {});
-        loadRewardedAd();
     }
 
     @Override
@@ -151,59 +151,10 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     return;
                 }
 
-                showRewardedAndAddSticker(pack.identifier, pack.name);
-            };
-
-    private void loadRewardedAd() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        RewardedAd.load(this,
-                "ca-app-pub-6979979912689100/5679037049", // test id
-                adRequest,
-                new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        rewardedAd = ad;
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError error) {
-                        rewardedAd = null;
-                    }
+                rewardedAdManager.showAd(this, rewardItem -> {
+                    addStickerPackToWhatsApp(pack.identifier, pack.name);
                 });
-    }
-
-    private void showRewardedAndAddSticker(String identifier, String stickerPackName) {
-        if (rewardedAd != null) {
-            isAdShowing = true;
-            isRewardEarned = false;
-
-            rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    isAdShowing = false;
-                    if (!isRewardEarned) {
-                        Toast.makeText(StickerPackListActivity.this, "Watch full ad to unlock stickers", Toast.LENGTH_SHORT).show();
-                    }
-                    rewardedAd = null;
-                    loadRewardedAd(); // preload next
-                }
-
-                @Override
-                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                    isAdShowing = false;
-                    rewardedAd = null;
-                    loadRewardedAd();
-                }
-            });
-
-            rewardedAd.show(this, rewardItem -> {
-                isRewardEarned = true;
-                addStickerPackToWhatsApp(identifier, stickerPackName);
-            });
-        } else {
-        }
-    }
+            };
 
     private boolean isInternetAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

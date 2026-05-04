@@ -62,7 +62,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
+    implementation 'com.google.ads.mediation:unity:4.9.2.0'
 
     // Fresco dependencies for image handling
     def fresco_version = '3.6.0' // Latest version for 16KB support
