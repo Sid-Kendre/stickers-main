@@ -252,9 +252,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
 
     private void moreApps() {
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:SK+Studio")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=8066128835537801410")));
         } catch (android.content.ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=SK+Studio")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=8066128835537801410")));
         }
     }
 

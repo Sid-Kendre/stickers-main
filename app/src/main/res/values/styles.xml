@@ -9,6 +9,7 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="materialButtonStyle">@style/PremiumButton</item>
+        <item name="colorControlNormal">@color/textPrimary</item>
     </style>
 
     <style name="PremiumButton" parent="Widget.MaterialComponents.Button">
