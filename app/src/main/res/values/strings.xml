@@ -43,4 +43,17 @@
     <!-- text we display at the end of sticker pack details page showing that users can tap sticker to see bigger version -->
     <string name="sticker_pack_details_tap_to_preview" tools:ignore="MissingTranslation">Tap to preview sticker</string>
     <string name="admob_app_id" translatable="false">ca-app-pub-6979979912689100~2520356241</string>
+
+    <!-- Drawer strings -->
+    <string name="nav_share">Share App</string>
+    <string name="nav_rate">Rate Us</string>
+    <string name="nav_privacy">Privacy Policy</string>
+    <string name="nav_more_apps">More Apps</string>
+    <string name="nav_how_to_use">How to Use</string>
+    <string name="nav_contact_us">Contact Us</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="share_text">Check out this amazing Sticker App! %1$s</string>
+    <string name="how_to_use_content">1. Open the app.\n2. Select a sticker pack.\n3. Tap \'Watch Ad to Get Stickers\'.\n4. Once the ad finishes, tap \'ADD\' when prompted by WhatsApp.\n5. Open WhatsApp and start using your new stickers!</string>
+    <string name="how_to_use_title">How to Use</string>
 </resources>

@@ -13,17 +13,25 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -32,12 +40,15 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import android.view.Menu;
 
 
 public class StickerPackListActivity extends AddStickerPackActivity {
@@ -53,11 +64,41 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private RewardedAd rewardedAd;
     private boolean isAdShowing = false;
     private boolean isRewardEarned = false;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_pack_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_how_to_use) {
+                showHowToUse();
+            } else if (id == R.id.nav_share) {
+                shareApp();
+            } else if (id == R.id.nav_rate) {
+                rateApp();
+            } else if (id == R.id.nav_more_apps) {
+                moreApps();
+            } else if (id == R.id.nav_contact_us) {
+                contactUs();
+            } else if (id == R.id.nav_privacy) {
+                openPrivacyPolicy();
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+
         packRecyclerView = findViewById(R.id.sticker_pack_list);
         stickerPackList = getIntent().getParcelableArrayListExtra(EXTRA_STICKER_PACK_LIST_DATA);
         showStickerPackList(stickerPackList);
@@ -195,6 +236,85 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sticker_pack_list, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search sticker packs...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (allStickerPacksListAdapter != null) {
+                    allStickerPacksListAdapter.filter(newText);
+                }
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void shareApp() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text, "https://play.google.com/store/apps/details?id=" + getPackageName()));
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Share via"));
+    }
+
+    private void showHowToUse() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.how_to_use_title)
+                .setMessage(R.string.how_to_use_content)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+    private void contactUs() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "skstudio@example.com", null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Support: " + getString(R.string.app_name));
+        startActivity(Intent.createChooser(intent, "Send email..."));
+    }
+
+    private void rateApp() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
+    }
+
+    private void moreApps() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:SK+Studio")));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=SK+Studio")));
+        }
+    }
+
+    private void openPrivacyPolicy() {
+        String url = getString(R.string.privacy_policy);
+        if (!url.startsWith("http")) {
+            url = "https://skstudio.com/privacy-policy"; // Fallback or use real URL from strings
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
 
     static class WhiteListCheckAsyncTask extends AsyncTask<StickerPack, Void, List<StickerPack>> {
         private final WeakReference<StickerPackListActivity> stickerPackListActivityWeakReference;

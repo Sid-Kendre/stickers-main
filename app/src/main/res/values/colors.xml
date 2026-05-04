@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@android:color/transparent</color>
-    <color name="colorPrimaryDark">#BABABA</color>
+    <color name="colorPrimary">#075E54</color>
+    <color name="colorPrimaryDark">#054D44</color>
+    <color name="colorPrimaryLight">#25D366</color>
     <color name="colorAccent">#128C7E</color>
+
+    <color name="background">#F4F7F6</color>
+    <color name="surface">#FFFFFF</color>
+
+    <color name="textPrimary">#1F2C33</color>
+    <color name="textSecondary">#667781</color>
+
     <color name="inactiveAddButtonColor">#B3B3B3</color>
-    <color name="infoPageBackgroundColor">#EBEBEB</color>
-    <color name="actionBarArrowColor">@color/colorAccent</color>
+    <color name="infoPageBackgroundColor">#F0F2F5</color>
+    <color name="actionBarArrowColor">#FFFFFF</color>
     <color name="animatedStickerIndicator">#66000000</color>
+
+    <color name="card_background">#FFFFFF</color>
+    <color name="divider">#E9EDEF</color>
 </resources>

@@ -25,11 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackListItemViewHolder> {
     @NonNull
     private List<StickerPack> stickerPacks;
+    @NonNull
+    private List<StickerPack> stickerPacksFull;
     @NonNull
     private final OnAddButtonClickedListener onAddButtonClickedListener;
     private int maxNumberOfStickersInARow;
@@ -37,6 +40,7 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackList
 
     StickerPackListAdapter(@NonNull List<StickerPack> stickerPacks, @NonNull OnAddButtonClickedListener onAddButtonClickedListener) {
         this.stickerPacks = stickerPacks;
+        this.stickerPacksFull = new ArrayList<>(stickerPacks);
         this.onAddButtonClickedListener = onAddButtonClickedListener;
     }
 
@@ -119,6 +123,22 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackList
 
     void setStickerPackList(List<StickerPack> stickerPackList) {
         this.stickerPacks = stickerPackList;
+        this.stickerPacksFull = new ArrayList<>(stickerPackList);
+    }
+
+    public void filter(String text) {
+        stickerPacks = new ArrayList<>();
+        if (text.isEmpty()) {
+            stickerPacks.addAll(stickerPacksFull);
+        } else {
+            text = text.toLowerCase();
+            for (StickerPack pack : stickerPacksFull) {
+                if (pack.name.toLowerCase().contains(text) || pack.publisher.toLowerCase().contains(text)) {
+                    stickerPacks.add(pack);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public interface OnAddButtonClickedListener {
