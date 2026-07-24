@@ -15,13 +15,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+
 class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
 
     final View container;
     final TextView titleView;
     final TextView publisherView;
     final TextView filesizeView;
-    final ImageView addButton;
+    final MaterialButton addButton;
     final ImageView animatedStickerPackIndicator;
     final LinearLayout imageRowView;
 

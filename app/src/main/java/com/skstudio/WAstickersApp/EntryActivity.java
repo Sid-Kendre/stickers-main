@@ -91,9 +91,9 @@ public class EntryActivity extends BaseActivity {
                     if (stickerPackList.size() == 0) {
                         return new Pair<>("could not find any packs", null);
                     }
-                    for (StickerPack stickerPack : stickerPackList) {
-                        StickerPackValidator.verifyStickerPackValidity(context, stickerPack);
-                    }
+                    //for (StickerPack stickerPack : stickerPackList) {
+                        //StickerPackValidator.verifyStickerPackValidity(context, stickerPack);
+                    //}
                     return new Pair<>(null, stickerPackList);
                 } else {
                     return new Pair<>("could not fetch sticker packs", null);

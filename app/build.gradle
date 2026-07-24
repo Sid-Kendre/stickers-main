@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "com.skstudio.WAstickersApp"  // Add this to define the namespace
-    compileSdkVersion 35
+     compileSdkVersion 36
 
     defaultConfig {
-        applicationId "com.skstudio.WAstickersApp" // Replace this with your desired namespace
+        applicationId "com.skstudio.WAstickersApp"
         minSdkVersion 21
-        targetSdkVersion 35  // If you want to target API 35
+        targetSdkVersion 36
         versionCode 15
         versionName "15.1.7"
         multiDexEnabled true

@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +86,14 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<StickerPackList
         viewHolder.animatedStickerPackIndicator.setVisibility(pack.animatedStickerPack ? View.VISIBLE : View.GONE);
     }
 
-    private void setAddButtonAppearance(ImageView addButton, StickerPack pack) {
+    private void setAddButtonAppearance(MaterialButton addButton, StickerPack pack) {
         if (pack.getIsWhitelisted()) {
-            addButton.setImageResource(R.drawable.sticker_3rdparty_added);
+            addButton.setIconResource(R.drawable.sticker_3rdparty_added);
             addButton.setClickable(false);
             addButton.setOnClickListener(null);
             setBackground(addButton, null);
         } else {
-            addButton.setImageResource(R.drawable.sticker_3rdparty_add);
+            addButton.setIconResource(R.drawable.sticker_3rdparty_add);
             addButton.setOnClickListener(v -> onAddButtonClickedListener.onAddButtonClicked(pack));
             TypedValue outValue = new TypedValue();
             addButton.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);

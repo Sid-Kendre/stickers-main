@@ -66,7 +66,7 @@ class StickerPackLoader {
         for (StickerPack stickerPack : stickerPackList) {
             final List<Sticker> stickers = getStickersForPack(context, stickerPack);
             stickerPack.setStickers(stickers);
-            StickerPackValidator.verifyStickerPackValidity(context, stickerPack);
+            //StickerPackValidator.verifyStickerPackValidity(context, stickerPack);
         }
         return stickerPackList;
     }

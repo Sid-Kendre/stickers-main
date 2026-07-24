@@ -51,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
                 app:strokeColor="@color/divider"
                 app:strokeWidth="1dp">
 
@@ -66,16 +66,20 @@
                         style="@style/InfoButtonStyle"
                         android:layout_marginTop="0dp"
                         android:clickable="false"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/info_screen_tray_icon"
                         android:textColor="@color/textSecondary"
-                        android:textSize="16sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.05" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="64dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
                         android:background="@color/divider" />
 
                     <TextView
@@ -83,8 +87,9 @@
                         style="@style/InfoButtonStyle"
                         android:layout_marginTop="0dp"
                         android:drawableStart="@drawable/sticker_3rdparty_web"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
+                        android:drawablePadding="24dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/view_webpage"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
@@ -93,6 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginStart="64dp"
+                        android:layout_marginEnd="24dp"
                         android:background="@color/divider" />
 
                     <TextView
@@ -100,8 +106,9 @@
                         style="@style/InfoButtonStyle"
                         android:layout_marginTop="0dp"
                         android:drawableStart="@drawable/sticker_3rdparty_email"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
+                        android:drawablePadding="24dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/send_email"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
@@ -110,6 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginStart="64dp"
+                        android:layout_marginEnd="24dp"
                         android:background="@color/divider" />
 
                     <TextView
@@ -117,8 +125,9 @@
                         style="@style/InfoButtonStyle"
                         android:layout_marginTop="0dp"
                         android:drawableStart="@drawable/sticker_3rdparty_privacy"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
+                        android:drawablePadding="24dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/privacy_policy"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
@@ -127,6 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginStart="64dp"
+                        android:layout_marginEnd="24dp"
                         android:background="@color/divider" />
 
                     <TextView
@@ -134,8 +144,9 @@
                         style="@style/InfoButtonStyle"
                         android:layout_marginTop="0dp"
                         android:drawableStart="@drawable/sticker_3rdparty_license"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
+                        android:drawablePadding="24dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/license_agreement"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />

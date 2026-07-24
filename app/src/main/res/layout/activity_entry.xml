@@ -5,11 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/entry_activity_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/colorPrimary"
+        android:indeterminate="true"
+        app:indicatorColor="@color/colorPrimary"
+        app:indicatorSize="48dp"
+        app:trackThickness="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
