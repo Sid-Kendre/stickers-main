@@ -201,7 +201,7 @@ class StickerPackLoader {
         saveRemotePacks(context, packs);
     }
 
-    private static void saveRemotePacks(Context context, List<StickerPack> packs) {
+    public static void saveRemotePacks(Context context, List<StickerPack> packs) {
         try {
             JSONArray array = new JSONArray();
             for (StickerPack pack : packs) {

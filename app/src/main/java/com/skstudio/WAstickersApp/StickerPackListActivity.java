@@ -115,6 +115,14 @@ public class StickerPackListActivity extends AddStickerPackActivity {
 
         packRecyclerView = findViewById(R.id.sticker_pack_list);
         stickerPackList = getIntent().getParcelableArrayListExtra(EXTRA_STICKER_PACK_LIST_DATA);
+        if (stickerPackList == null || stickerPackList.isEmpty()) {
+            // Try to load from cache
+            List<StickerPack> cachedPacks = StickerPackLoader.loadRemotePacks(this);
+            if (!cachedPacks.isEmpty()) {
+                stickerPackList = new ArrayList<>(cachedPacks);
+            }
+        }
+
         if (stickerPackList != null) {
             originalStickerPackList = new ArrayList<>(stickerPackList);
             packMap = new LinkedHashMap<>();
@@ -129,8 +137,11 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         }
         showStickerPackList(stickerPackList != null ? stickerPackList : new ArrayList<>());
 
-        if (stickerPackList == null) {
+        if (originalStickerPackList.isEmpty()) {
             refreshStickerPacks();
+        } else if (isInternetAvailable()) {
+            // Even if we have cache, refresh in background if internet is available
+            new RefreshAsyncTask(this).execute();
         }
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -238,6 +249,8 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     }
                     activity.originalStickerPackList = new ArrayList<>(activity.packMap.values());
                     activity.filterByCategory(activity.currentCategory);
+                    // Save to cache
+                    StickerPackLoader.saveRemotePacks(activity, activity.originalStickerPackList);
                 } else if (activity.originalStickerPackList == null || activity.originalStickerPackList.isEmpty()) {
                     // Show error state only if we don't have any data yet
                     if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.VISIBLE);

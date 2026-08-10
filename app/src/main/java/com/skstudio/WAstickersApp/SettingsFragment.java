@@ -48,6 +48,8 @@ public class SettingsFragment extends Fragment {
             startActivity(Intent.createChooser(intent, "Send request..."));
         });
 
+        view.findViewById(R.id.settings_clear_cache).setOnClickListener(v -> clearCache());
+
         loadNativeAd(view);
 
         return view;
@@ -102,6 +104,23 @@ public class SettingsFragment extends Fragment {
         } catch (android.content.ActivityNotFoundException anfe) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=8066128835537801410")));
         }
+    }
+
+    private void clearCache() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.settings_clear_cache)
+                .setMessage("Are you sure you want to clear the cached sticker packs? They will be reloaded next time you have internet connection.")
+                .setPositiveButton("Clear", (dialog, which) -> {
+                    java.io.File file = new java.io.File(requireContext().getFilesDir(), "remote_packs.json");
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                    // Also clear Fresco cache
+                    com.facebook.drawee.backends.pipeline.Fresco.getImagePipeline().clearCaches();
+                    Toast.makeText(getContext(), R.string.cache_cleared, Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
 }
