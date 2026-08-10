@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import android.view.Menu;
 
@@ -59,6 +61,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private View loadingOverlay;
     private com.facebook.shimmer.ShimmerFrameLayout shimmerFrameLayout;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private View errorStateView;
     private int currentPage = 1;
     private boolean isLoading = false;
     private boolean hasNextPage = true;
@@ -67,6 +70,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
 
     private List<StickerPack> originalStickerPackList;
     private View emptyStateView;
+    private String currentCategory = "ALL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +110,23 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         loadingOverlay = findViewById(R.id.loading_overlay);
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
         emptyStateView = findViewById(R.id.empty_state_view);
+        errorStateView = findViewById(R.id.error_state_view);
+        findViewById(R.id.retry_button).setOnClickListener(v -> refreshStickerPacks());
 
         packRecyclerView = findViewById(R.id.sticker_pack_list);
         stickerPackList = getIntent().getParcelableArrayListExtra(EXTRA_STICKER_PACK_LIST_DATA);
+        if (stickerPackList != null) {
+            originalStickerPackList = new ArrayList<>(stickerPackList);
+            packMap = new LinkedHashMap<>();
+            for (StickerPack pack : originalStickerPackList) {
+                if (pack != null && pack.identifier != null) {
+                    packMap.put(pack.identifier, pack);
+                }
+            }
+        } else {
+            originalStickerPackList = new ArrayList<>();
+            packMap = new LinkedHashMap<>();
+        }
         showStickerPackList(stickerPackList != null ? stickerPackList : new ArrayList<>());
 
         if (stickerPackList == null) {
@@ -158,6 +176,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private void showRecyclerView() {
         findViewById(R.id.swipe_refresh).setVisibility(View.VISIBLE);
         if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
+        if (errorStateView != null) errorStateView.setVisibility(View.GONE);
         findViewById(R.id.fragment_container).setVisibility(View.GONE);
         if (getSupportActionBar() != null) {
             if (stickerPackList != null) {
@@ -208,18 +227,22 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                 activity.isLoading = false;
                 activity.swipeRefreshLayout.setRefreshing(false);
                 activity.hideLoader(); // Hide Shimmer
-                if (result != null) {
+                if (result != null && result.stickerPacks != null && !result.stickerPacks.isEmpty()) {
+                    if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.GONE);
+                    activity.swipeRefreshLayout.setVisibility(View.VISIBLE);
                     activity.packMap.clear();
                     for (StickerPack pack : result.stickerPacks) {
-                        activity.packMap.put(pack.identifier, pack);
+                        if (pack != null && pack.identifier != null) {
+                            activity.packMap.put(pack.identifier, pack);
+                        }
                     }
-                    activity.originalStickerPackList = new ArrayList<>(result.stickerPacks);
-                    activity.stickerPackList = new ArrayList<>(activity.originalStickerPackList);
-                    activity.allStickerPacksListAdapter.updateData(activity.stickerPackList);
-                    if (activity.getSupportActionBar() != null) {
-                        activity.getSupportActionBar().setTitle(activity.getResources().getQuantityString(R.plurals.title_activity_sticker_packs_list, activity.stickerPackList.size()));
-                    }
-                    Toast.makeText(activity, "Stickers updated", Toast.LENGTH_SHORT).show();
+                    activity.originalStickerPackList = new ArrayList<>(activity.packMap.values());
+                    activity.filterByCategory(activity.currentCategory);
+                } else if (activity.originalStickerPackList == null || activity.originalStickerPackList.isEmpty()) {
+                    // Show error state only if we don't have any data yet
+                    if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.VISIBLE);
+                    activity.swipeRefreshLayout.setVisibility(View.GONE);
+                    Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
                 }
@@ -230,6 +253,12 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+        if (mAdView1 != null) {
+            mAdView1.resume();
+        }
         if (stickerPackList != null && !stickerPackList.isEmpty()) {
             whiteListCheckAsyncTask = new WhiteListCheckAsyncTask(this);
             whiteListCheckAsyncTask.execute(stickerPackList.toArray(new StickerPack[0]));
@@ -240,7 +269,24 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     }
 
     @Override
+    protected void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        if (mAdView1 != null) {
+            mAdView1.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        if (mAdView1 != null) {
+            mAdView1.destroy();
+        }
         super.onDestroy();
         if (whiteListCheckAsyncTask != null && !whiteListCheckAsyncTask.isCancelled()) {
             whiteListCheckAsyncTask.cancel(true);
@@ -251,6 +297,10 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     }
 
     private void filterByCategory(String category) {
+        this.currentCategory = category;
+        if (originalStickerPackList == null) {
+            originalStickerPackList = new ArrayList<>();
+        }
         if (category.equals("ALL")) {
             stickerPackList = new ArrayList<>(originalStickerPackList);
             if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
@@ -259,20 +309,37 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             stickerPackList = new ArrayList<>();
             FavoriteManager fm = new FavoriteManager(this);
             for (StickerPack pack : originalStickerPackList) {
-                if (fm.isFavorite(pack.identifier)) {
+                if (pack != null && pack.identifier != null && fm.isFavorite(pack.identifier)) {
                     stickerPackList.add(pack);
                 }
             }
             if (stickerPackList.isEmpty()) {
-                if (emptyStateView != null) emptyStateView.setVisibility(View.VISIBLE);
+                if (emptyStateView != null) {
+                    emptyStateView.setVisibility(View.VISIBLE);
+                    TextView tv = emptyStateView.findViewById(R.id.empty_state_text);
+                    if (tv != null) tv.setText("No favorites yet");
+                }
                 swipeRefreshLayout.setVisibility(View.GONE);
             } else {
                 if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
                 swipeRefreshLayout.setVisibility(View.VISIBLE);
             }
         }
-        allStickerPacksListAdapter.setData(stickerPackList);
-        allStickerPacksListAdapter.notifyDataSetChanged();
+        if (allStickerPacksListAdapter != null) {
+            allStickerPacksListAdapter.setData(stickerPackList);
+            allStickerPacksListAdapter.notifyDataSetChanged();
+        }
+        updateActionBarTitle();
+    }
+
+    private void updateActionBarTitle() {
+        if (getSupportActionBar() != null) {
+            if (stickerPackList != null) {
+                getSupportActionBar().setTitle(getResources().getQuantityString(R.plurals.title_activity_sticker_packs_list, stickerPackList.size()));
+            } else {
+                getSupportActionBar().setTitle(R.string.app_name);
+            }
+        }
     }
 
     private void showStickerPackList(List<StickerPack> stickerPackList) {
@@ -300,7 +367,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     int totalItemCount = packLayoutManager.getItemCount();
                     int pastVisibleItems = packLayoutManager.findFirstVisibleItemPosition();
 
-                    if (!isLoading && hasNextPage) {
+                    if (!isLoading && hasNextPage && "ALL".equals(currentCategory)) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount - 10) {
                             loadNextPage();
                         }
@@ -350,13 +417,14 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             StickerPackListActivity activity = activityRef.get();
             if (activity != null) {
                 activity.isLoading = false;
-                activity.allStickerPacksListAdapter.showLoadingFooter(false);
+                if (activity.allStickerPacksListAdapter != null) {
+                    activity.allStickerPacksListAdapter.showLoadingFooter(false);
+                }
                 if (result != null) {
                     activity.currentPage++;
                     activity.hasNextPage = result.hasNextPage;
                     activity.originalStickerPackList = new ArrayList<>(activity.packMap.values());
-                    activity.stickerPackList = new ArrayList<>(activity.originalStickerPackList);
-                    activity.allStickerPacksListAdapter.updateData(activity.stickerPackList);
+                    activity.filterByCategory(activity.currentCategory);
                 } else {
                     Toast.makeText(activity, "Failed to load more stickers", Toast.LENGTH_SHORT).show();
                 }
@@ -434,15 +502,38 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     }
 
     private void recalculateColumnCount() {
+        if (packLayoutManager == null || packRecyclerView == null) {
+            return;
+        }
         final int previewSize = getResources().getDimensionPixelSize(R.dimen.sticker_pack_list_item_preview_image_size);
         int firstVisibleItemPosition = packLayoutManager.findFirstVisibleItemPosition();
-        StickerPackListItemViewHolder viewHolder = (StickerPackListItemViewHolder) packRecyclerView.findViewHolderForAdapterPosition(firstVisibleItemPosition);
-        if (viewHolder != null) {
+        if (firstVisibleItemPosition == RecyclerView.NO_POSITION) {
+            // If no items are visible yet, try to get a measurement from the recycler view width itself
+            // to provide a sensible default.
+            int recyclerViewWidth = packRecyclerView.getWidth();
+            if (recyclerViewWidth > 0) {
+                // Approximate width for the image row (subtracting margins/padding)
+                int estimatedImageRowWidth = recyclerViewWidth - (int)(64 * getResources().getDisplayMetrics().density);
+                updateImageRowSpec(estimatedImageRowWidth, previewSize);
+            }
+            return;
+        }
+        RecyclerView.ViewHolder holder = packRecyclerView.findViewHolderForAdapterPosition(firstVisibleItemPosition);
+        if (holder instanceof StickerPackListItemViewHolder) {
+            StickerPackListItemViewHolder viewHolder = (StickerPackListItemViewHolder) holder;
             final int widthOfImageRow = viewHolder.imageRowView.getMeasuredWidth();
+            updateImageRowSpec(widthOfImageRow, previewSize);
+        }
+    }
+
+    private void updateImageRowSpec(int widthOfImageRow, int previewSize) {
+        if (widthOfImageRow > 0) {
             final int max = Math.max(widthOfImageRow / previewSize, 1);
             int maxNumberOfImagesInARow = Math.min(STICKER_PREVIEW_DISPLAY_LIMIT, max);
-            int minMarginBetweenImages = (widthOfImageRow - maxNumberOfImagesInARow * previewSize) / (maxNumberOfImagesInARow - 1);
-            allStickerPacksListAdapter.setImageRowSpec(maxNumberOfImagesInARow, minMarginBetweenImages);
+            int minMarginBetweenImages = maxNumberOfImagesInARow > 1 ? (widthOfImageRow - maxNumberOfImagesInARow * previewSize) / (maxNumberOfImagesInARow - 1) : 0;
+            if (allStickerPacksListAdapter != null) {
+                allStickerPacksListAdapter.setImageRowSpec(maxNumberOfImagesInARow, minMarginBetweenImages);
+            }
         }
     }
 

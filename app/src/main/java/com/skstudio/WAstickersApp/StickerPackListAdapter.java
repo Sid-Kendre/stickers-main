@@ -185,12 +185,22 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void setData(List<StickerPack> newList) {
-        this.stickerPacks = new ArrayList<>(newList);
+        if (newList == null) {
+            this.stickerPacks = new ArrayList<>();
+        } else {
+            this.stickerPacks = new ArrayList<>(newList);
+        }
         // Note: we don't update stickerPacksFull here because that represents the source list
         // which might be different during category filtering.
     }
 
     public void updateData(List<StickerPack> newList) {
+        if (newList == null) {
+            this.stickerPacks = new ArrayList<>();
+            this.stickerPacksFull = new ArrayList<>();
+            notifyDataSetChanged();
+            return;
+        }
         // Simple update logic: compare sizes and notify
         int oldSize = this.stickerPacks.size();
         this.stickerPacks = new ArrayList<>(newList);
