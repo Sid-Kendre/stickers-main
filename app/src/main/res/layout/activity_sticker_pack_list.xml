@@ -97,23 +97,7 @@
                     app:icon="@android:drawable/ic_menu_search" />
             </LinearLayout>
 
-            <!-- Shimmer Loading Overlay (List Only) -->
-            <FrameLayout
-                android:id="@+id/loading_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/background"
-                android:visibility="gone"
-                android:clickable="true"
-                android:focusable="true">
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_view_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:shimmer_duration="1000">
-
-                    <LinearLayout
+            <LinearLayout
                 android:id="@+id/error_state_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -143,18 +127,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="@string/retry" />
+                    android:text="@string/refresh"
+                    app:icon="@android:drawable/ic_menu_rotate" />
             </LinearLayout>
 
-            <LinearLayout
+            <!-- Shimmer Loading Overlay (List Only) -->
+            <FrameLayout
+                android:id="@+id/loading_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shimmer_duration="1000">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
+
                         <include layout="@layout/layout_shimmer_sticker_pack" />
                     </LinearLayout>
 

@@ -222,12 +222,10 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
             NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
             if (capabilities == null) return false;
 
-            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                    || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                    || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET);
+            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
         } else {
             android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            return activeNetwork != null && activeNetwork.isConnected();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         }
     }
 

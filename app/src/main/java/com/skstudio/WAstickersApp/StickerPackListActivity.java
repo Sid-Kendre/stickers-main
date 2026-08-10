@@ -505,12 +505,16 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             if (network == null) return false;
 
             NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
-            return capabilities != null &&
-                    (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+            if (capabilities == null) return false;
+
+            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                   (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN));
         } else {
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            return activeNetwork != null && activeNetwork.isConnected();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         }
     }
 
@@ -572,6 +576,15 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_refresh) {
+            refreshStickerPacks();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

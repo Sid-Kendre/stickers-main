@@ -107,6 +107,8 @@ class StickerPackLoader {
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+        connection.setConnectTimeout(15000);
+        connection.setReadTimeout(15000);
         connection.connect();
 
         boolean hasNextPage = false;
