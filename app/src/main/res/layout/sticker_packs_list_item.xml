@@ -40,6 +40,23 @@
                 android:textColor="@color/textPrimary"
                 tools:text="Pusheen" />
 
+            <TextView
+                android:id="@+id/sticker_pack_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/category_chip_bg"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/category_chip_text"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="LOVE"
+                tools:visibility="visible" />
+
             <ImageView
                 android:id="@+id/sticker_pack_animation_indicator"
                 android:layout_width="16dp"
@@ -77,13 +94,15 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
-                android:text="@string/dot" />
+                android:text="@string/dot"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/sticker_pack_filesize"
                 style="@style/sticker_packs_list_item_author_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 tools:text="700kb" />
 
         </LinearLayout>
@@ -97,6 +116,18 @@
             app:layout_constraintEnd_toStartOf="@id/add_button_on_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sticker_pack_meta" />
+
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:src="@drawable/ic_favorite_border"
+            app:layout_constraintBottom_toBottomOf="@id/sticker_pack_meta"
+            app:layout_constraintEnd_toStartOf="@id/add_button_on_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button_on_list"
@@ -113,7 +144,7 @@
             app:iconPadding="0dp"
             app:iconSize="28dp"
             app:iconTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/sticker_pack_meta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="@color/rippleColor" />

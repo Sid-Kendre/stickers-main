@@ -181,8 +181,8 @@ class ContentFileParser {
             if (TextUtils.isEmpty(imageFile)) {
                 throw new IllegalStateException("sticker image_file cannot be empty");
             }
-            if (!imageFile.endsWith(".webp")) {
-                throw new IllegalStateException("image file for stickers should be webp files, image file is: " + imageFile);
+            if (!imageFile.endsWith(".webp") && !imageFile.endsWith(".png") && !imageFile.endsWith(".jpg") && !imageFile.endsWith(".jpeg")) {
+                throw new IllegalStateException("image file for stickers should be webp, png or jpg files, image file is: " + imageFile);
             }
             if (imageFile.contains("..") || imageFile.contains("/")) {
                 throw new IllegalStateException("the file name should not contain .. or / to prevent directory traversal, image file is:" + imageFile);

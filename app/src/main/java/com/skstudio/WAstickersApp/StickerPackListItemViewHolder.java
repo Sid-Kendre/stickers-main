@@ -9,6 +9,7 @@
 package com.skstudio.WAstickersApp;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +24,9 @@ class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
     final TextView titleView;
     final TextView publisherView;
     final TextView filesizeView;
+    final TextView categoryView;
     final MaterialButton addButton;
+    final ImageButton favoriteButton;
     final ImageView animatedStickerPackIndicator;
     final LinearLayout imageRowView;
 
@@ -33,7 +36,9 @@ class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
         titleView = itemView.findViewById(R.id.sticker_pack_title);
         publisherView = itemView.findViewById(R.id.sticker_pack_publisher);
         filesizeView = itemView.findViewById(R.id.sticker_pack_filesize);
+        categoryView = itemView.findViewById(R.id.sticker_pack_category);
         addButton = itemView.findViewById(R.id.add_button_on_list);
+        favoriteButton = itemView.findViewById(R.id.favorite_button);
         imageRowView = itemView.findViewById(R.id.sticker_packs_list_item_image_list);
         animatedStickerPackIndicator = itemView.findViewById(R.id.sticker_pack_animation_indicator);
     }

@@ -10,6 +10,8 @@ package com.skstudio.WAstickersApp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -18,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +49,13 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class StickerPackDetailsActivity extends AddStickerPackActivity {
 
@@ -81,8 +90,10 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
     private boolean isAdShowing = false;
     private boolean isRewardEarned = false;
     private View loadingOverlay;
+    private com.facebook.shimmer.ShimmerFrameLayout shimmerFrameLayout;
     private String pendingIdentifier;
     private String pendingName;
+    private boolean isDownloading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +103,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
         setSupportActionBar(toolbar);
         boolean showUpButton = getIntent().getBooleanExtra(EXTRA_SHOW_UP_BUTTON, false);
         stickerPack = getIntent().getParcelableExtra(EXTRA_STICKER_PACK_DATA);
+        
         TextView packNameTextView = findViewById(R.id.pack_name);
         TextView packPublisherTextView = findViewById(R.id.author);
         ImageView packTrayIcon = findViewById(R.id.tray_image);
@@ -113,7 +125,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
         }
         packNameTextView.setText(stickerPack.name);
         packPublisherTextView.setText(stickerPack.publisher);
-        packTrayIcon.setImageURI(StickerPackLoader.getStickerAssetUri(stickerPack.identifier, stickerPack.trayImageFile));
+        packTrayIcon.setImageURI(StickerPackLoader.getTrayIconUri(this, stickerPack));
         packSizeTextView.setText(Formatter.formatShortFileSize(this, stickerPack.getTotalSize()));
         addButton.setOnClickListener(v -> {
             // ❌ No Internet → Stop everything
@@ -143,23 +155,50 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest);
+        loadNativeAd("ca-app-pub-6979979912689100/7358307302", findViewById(R.id.native_ad_container));
+
+        loadingOverlay = findViewById(R.id.loading_overlay);
+        shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
     }
 
     private void showLoader() {
         addButton.setEnabled(false);
         loadingOverlay.setVisibility(View.VISIBLE);
+        if (shimmerFrameLayout != null) {
+            shimmerFrameLayout.startShimmer();
+        }
     }
 
     private void hideLoader() {
+        addButton.setEnabled(true);
         loadingOverlay.setVisibility(View.GONE);
+        if (shimmerFrameLayout != null) {
+            shimmerFrameLayout.stopShimmer();
+        }
     }
 
     private void showRewardedAndAddSticker(String identifier, String stickerPackName) {
+        if (isAdShowing) return;
 
-       if (isAdShowing) return;
+        if (!StickerPackLoader.isStickerPackDownloaded(this, stickerPack)) {
+            pendingIdentifier = identifier;
+            pendingName = stickerPackName;
+            showLoader();
+            Toast.makeText(this, "Downloading stickers, please wait...", Toast.LENGTH_SHORT).show();
+            StickerPackLoader.downloadStickers(this, stickerPack, () -> {
+                hideLoader();
+                if (pendingIdentifier != null && !isAdShowing) {
+                    showRewardedAndAddSticker(pendingIdentifier, pendingName);
+                }
+            });
+            return;
+        }
 
+        // Temporarily bypassing ad for testing
+        // performValidationAndAddPack(identifier, stickerPackName);
+        
         if (rewardedAd != null) {
-             //✅ Ad already ready → show immediately
+            //✅ Ad already ready → show immediately
             showAd(identifier, stickerPackName);
         } else {
             // ❌ Ad not ready → store request & load
@@ -234,7 +273,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
             @Override
             public void onAdDismissedFullScreenContent() {
                 isAdShowing = false;
-
+                hideLoader();
                 if (!isRewardEarned) {
                     Toast.makeText(StickerPackDetailsActivity.this,
                             "Watch full ad to unlock stickers",
@@ -248,6 +287,7 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
             @Override
             public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                 isAdShowing = false;
+                hideLoader();
                 rewardedAd = null;
                 loadRewardedAd();
             }
@@ -255,8 +295,38 @@ public class StickerPackDetailsActivity extends AddStickerPackActivity {
 
         rewardedAd.show(this, rewardItem -> {
             isRewardEarned = true;
-            addStickerPackToWhatsApp(identifier, stickerPackName);
+            performValidationAndAddPack(identifier, stickerPackName);
         });
+    }
+
+    private void performValidationAndAddPack(String identifier, String stickerPackName) {
+        new AsyncTask<Void, Void, Exception>() {
+            @Override
+            protected void onPreExecute() {
+                showLoader();
+            }
+
+            @Override
+            protected Exception doInBackground(Void... voids) {
+                try {
+                    StickerPackValidator.verifyStickerPackValidity(StickerPackDetailsActivity.this, stickerPack);
+                    return null;
+                } catch (Exception e) {
+                    return e;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Exception e) {
+                hideLoader();
+                if (e == null) {
+                    addStickerPackToWhatsApp(identifier, stickerPackName);
+                } else {
+                    Log.e("StickerPackDetails", "Sticker pack validation failed", e);
+                    Toast.makeText(StickerPackDetailsActivity.this, "Validation failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }.execute();
     }
 
     private void launchInfoActivity(String publisherWebsite, String publisherEmail, String privacyPolicyWebsite, String licenseAgreementWebsite, String trayIconUriString) {

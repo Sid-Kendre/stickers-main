@@ -9,6 +9,10 @@
 package com.skstudio.WAstickersApp;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -18,5 +22,9 @@ public class StickerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        
+        SharedPreferences prefs = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE);
+        int savedTheme = prefs.getInt("selected_theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(savedTheme);
     }
 }

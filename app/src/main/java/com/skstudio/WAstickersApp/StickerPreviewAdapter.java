@@ -8,18 +8,26 @@
 
 package com.skstudio.WAstickersApp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.skstudio.WAstickersApp.StickerPack;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class StickerPreviewAdapter extends RecyclerView.Adapter<StickerPreviewViewHolder> {
 
@@ -75,7 +83,7 @@ public class StickerPreviewAdapter extends RecyclerView.Adapter<StickerPreviewVi
     @Override
     public void onBindViewHolder(@NonNull final StickerPreviewViewHolder stickerPreviewViewHolder, final int i) {
         stickerPreviewViewHolder.stickerPreviewView.setImageResource(errorResource);
-        stickerPreviewViewHolder.stickerPreviewView.setImageURI(StickerPackLoader.getStickerAssetUri(stickerPack.identifier, stickerPack.getStickers().get(i).imageFileName));
+        stickerPreviewViewHolder.stickerPreviewView.setImageURI(StickerPackLoader.getStickerUri(stickerPreviewViewHolder.stickerPreviewView.getContext(), stickerPack, stickerPack.getStickers().get(i)));
         stickerPreviewViewHolder.stickerPreviewView.setOnClickListener(v -> expandPreview(i, stickerPreviewViewHolder.stickerPreviewView));
     }
 
@@ -170,7 +178,7 @@ public class StickerPreviewAdapter extends RecyclerView.Adapter<StickerPreviewVi
         if (expandedStickerPreview != null) {
             positionExpandedStickerPreview(position);
 
-            final Uri stickerAssetUri = StickerPackLoader.getStickerAssetUri(stickerPack.identifier, stickerPack.getStickers().get(position).imageFileName);
+            final Uri stickerAssetUri = StickerPackLoader.getStickerUri(expandedStickerPreview.getContext(), stickerPack, stickerPack.getStickers().get(position));
             DraweeController controller = Fresco.newDraweeControllerBuilder()
                     .setUri(stickerAssetUri)
                     .setAutoPlayAnimations(true)
@@ -182,6 +190,50 @@ public class StickerPreviewAdapter extends RecyclerView.Adapter<StickerPreviewVi
             recyclerView.setAlpha(EXPANDED_STICKER_PREVIEW_BACKGROUND_ALPHA);
 
             expandedStickerPreview.setOnClickListener(v -> hideExpandedStickerPreview());
+            expandedStickerPreview.setOnLongClickListener(v -> {
+                shareSticker(position);
+                return true;
+            });
+        }
+    }
+
+    private void shareSticker(int position) {
+        Context context = expandedStickerPreview.getContext();
+        Sticker sticker = stickerPack.getStickers().get(position);
+        File stickerFile = new File(context.getFilesDir(), "stickers/" + stickerPack.identifier + "/" + sticker.imageFileName);
+
+        if (stickerFile.exists()) {
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", stickerFile);
+            shareUri(context, uri, "image/webp");
+        } else {
+            // If file doesn't exist locally, try to use the cache or captured bitmap as fallback
+            Bitmap bitmap = Bitmap.createBitmap(expandedStickerPreview.getWidth(), expandedStickerPreview.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            expandedStickerPreview.draw(canvas);
+
+            File cachePath = new File(context.getCacheDir(), "images");
+            if (!cachePath.exists()) {
+                cachePath.mkdirs();
+            }
+            File file = new File(cachePath, "shared_sticker.png");
+            try (FileOutputStream stream = new FileOutputStream(file)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            shareUri(context, uri, "image/png");
+        }
+    }
+
+    private void shareUri(Context context, Uri uri, String mimeType) {
+        if (uri != null) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType(mimeType);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            context.startActivity(Intent.createChooser(intent, "Share Sticker"));
         }
     }
 

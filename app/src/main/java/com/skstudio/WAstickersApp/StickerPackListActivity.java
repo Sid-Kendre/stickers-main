@@ -23,26 +23,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -61,8 +55,18 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private ArrayList<StickerPack> stickerPackList;
     private AdView mAdView;
     private AdView mAdView1;
-    private DrawerLayout drawerLayout;
     private RewardedAdManager rewardedAdManager;
+    private View loadingOverlay;
+    private com.facebook.shimmer.ShimmerFrameLayout shimmerFrameLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private int currentPage = 1;
+    private boolean isLoading = false;
+    private boolean hasNextPage = true;
+    private java.util.Map<String, StickerPack> packMap = new java.util.LinkedHashMap<>();
+    private LoadMoreAsyncTask loadMoreAsyncTask;
+
+    private List<StickerPack> originalStickerPackList;
+    private View emptyStateView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,59 +78,201 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         rewardedAdManager = RewardedAdManager.getInstance();
         rewardedAdManager.loadAd(this);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this::refreshStickerPacks);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-        navigationView.setNavigationItemSelectedListener(item -> {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_how_to_use) {
-                showHowToUse();
-            } else if (id == R.id.nav_share) {
-                shareApp();
-            } else if (id == R.id.nav_rate) {
-                rateApp();
-            } else if (id == R.id.nav_more_apps) {
-                moreApps();
-            } else if (id == R.id.nav_contact_us) {
-                contactUs();
-            } else if (id == R.id.nav_privacy) {
-                openPrivacyPolicy();
+            updateAdVisibility(id);
+            if (id == R.id.nav_home) {
+                showRecyclerView();
+                filterByCategory("ALL");
+                return true;
+            } else if (id == R.id.nav_favorites) {
+                showRecyclerView();
+                filterByCategory("FAVORITES");
+                return true;
+            } else if (id == R.id.nav_settings) {
+                showSettingsFragment();
+                return true;
             }
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
+            return false;
         });
+
+        mAdView = findViewById(R.id.adView);
+        mAdView1 = findViewById(R.id.adView7);
+        loadingOverlay = findViewById(R.id.loading_overlay);
+        shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
+        emptyStateView = findViewById(R.id.empty_state_view);
 
         packRecyclerView = findViewById(R.id.sticker_pack_list);
         stickerPackList = getIntent().getParcelableArrayListExtra(EXTRA_STICKER_PACK_LIST_DATA);
-        showStickerPackList(stickerPackList);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(getResources().getQuantityString(R.plurals.title_activity_sticker_packs_list, stickerPackList.size()));
+        showStickerPackList(stickerPackList != null ? stickerPackList : new ArrayList<>());
+
+        if (stickerPackList == null) {
+            refreshStickerPacks();
         }
-        mAdView = findViewById(R.id.adView);
-        mAdView1 = findViewById(R.id.adView7);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest);
+        loadNativeAd("ca-app-pub-6979979912689100/6586602956", findViewById(R.id.native_ad_container));
+        updateAdVisibility(R.id.nav_home);
         MobileAds.initialize(this, initializationStatus -> {});
+        emptyStateView = findViewById(R.id.empty_state_view);
+        findViewById(R.id.empty_state_button).setOnClickListener(v -> {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        });
+    }
+
+    private void updateAdVisibility(int navId) {
+        if (mAdView == null || mAdView1 == null) return;
+        if (navId == R.id.nav_home) {
+            mAdView.setVisibility(View.GONE);
+            mAdView1.setVisibility(View.GONE);
+            if (findViewById(R.id.native_ad_container) != null) {
+                findViewById(R.id.native_ad_container).setVisibility(View.VISIBLE);
+            }
+        } else {
+            mAdView.setVisibility(View.VISIBLE);
+            mAdView1.setVisibility(View.VISIBLE);
+            if (findViewById(R.id.native_ad_container) != null) {
+                findViewById(R.id.native_ad_container).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showSettingsFragment() {
+        findViewById(R.id.swipe_refresh).setVisibility(View.GONE);
+        if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
+        findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new SettingsFragment())
+                .commit();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Settings");
+        }
+    }
+
+    private void showRecyclerView() {
+        findViewById(R.id.swipe_refresh).setVisibility(View.VISIBLE);
+        if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
+        findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        if (getSupportActionBar() != null) {
+            if (stickerPackList != null) {
+                getSupportActionBar().setTitle(getResources().getQuantityString(R.plurals.title_activity_sticker_packs_list, stickerPackList.size()));
+            } else {
+                getSupportActionBar().setTitle(R.string.app_name);
+            }
+        }
+    }
+
+    private void refreshStickerPacks() {
+        if (isLoading) {
+            swipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        isLoading = true;
+        currentPage = 1;
+        hasNextPage = true;
+        showLoader(); // Show Shimmer
+        new RefreshAsyncTask(this).execute();
+    }
+
+    static class RefreshAsyncTask extends AsyncTask<Void, Void, StickerPackLoader.FetchResult> {
+        private final WeakReference<StickerPackListActivity> activityRef;
+
+        RefreshAsyncTask(StickerPackListActivity activity) {
+            this.activityRef = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected StickerPackLoader.FetchResult doInBackground(Void... voids) {
+            try {
+                StickerPackListActivity activity = activityRef.get();
+                if (activity != null) {
+                    // Start fresh for refresh
+                    return StickerPackLoader.fetchFromRemoteApi(1, 200, new java.util.LinkedHashMap<>());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(StickerPackLoader.FetchResult result) {
+            StickerPackListActivity activity = activityRef.get();
+            if (activity != null) {
+                activity.isLoading = false;
+                activity.swipeRefreshLayout.setRefreshing(false);
+                activity.hideLoader(); // Hide Shimmer
+                if (result != null) {
+                    activity.packMap.clear();
+                    for (StickerPack pack : result.stickerPacks) {
+                        activity.packMap.put(pack.identifier, pack);
+                    }
+                    activity.originalStickerPackList = new ArrayList<>(result.stickerPacks);
+                    activity.stickerPackList = new ArrayList<>(activity.originalStickerPackList);
+                    activity.allStickerPacksListAdapter.updateData(activity.stickerPackList);
+                    if (activity.getSupportActionBar() != null) {
+                        activity.getSupportActionBar().setTitle(activity.getResources().getQuantityString(R.plurals.title_activity_sticker_packs_list, activity.stickerPackList.size()));
+                    }
+                    Toast.makeText(activity, "Stickers updated", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        whiteListCheckAsyncTask = new WhiteListCheckAsyncTask(this);
-        whiteListCheckAsyncTask.execute(stickerPackList.toArray(new StickerPack[0]));
+        if (stickerPackList != null && !stickerPackList.isEmpty()) {
+            whiteListCheckAsyncTask = new WhiteListCheckAsyncTask(this);
+            whiteListCheckAsyncTask.execute(stickerPackList.toArray(new StickerPack[0]));
+        }
+        if (rewardedAdManager != null) {
+            rewardedAdManager.loadAd(this);
+        }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         if (whiteListCheckAsyncTask != null && !whiteListCheckAsyncTask.isCancelled()) {
             whiteListCheckAsyncTask.cancel(true);
         }
+        if (loadMoreAsyncTask != null && !loadMoreAsyncTask.isCancelled()) {
+            loadMoreAsyncTask.cancel(true);
+        }
+    }
+
+    private void filterByCategory(String category) {
+        if (category.equals("ALL")) {
+            stickerPackList = new ArrayList<>(originalStickerPackList);
+            if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+        } else if (category.equals("FAVORITES")) {
+            stickerPackList = new ArrayList<>();
+            FavoriteManager fm = new FavoriteManager(this);
+            for (StickerPack pack : originalStickerPackList) {
+                if (fm.isFavorite(pack.identifier)) {
+                    stickerPackList.add(pack);
+                }
+            }
+            if (stickerPackList.isEmpty()) {
+                if (emptyStateView != null) emptyStateView.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
+            } else {
+                if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
+        }
+        allStickerPacksListAdapter.setData(stickerPackList);
+        allStickerPacksListAdapter.notifyDataSetChanged();
     }
 
     private void showStickerPackList(List<StickerPack> stickerPackList) {
@@ -141,6 +287,81 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         packRecyclerView.addItemDecoration(dividerItemDecoration);
         packRecyclerView.setLayoutManager(packLayoutManager);
         packRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(this::recalculateColumnCount);
+        setupPagination();
+    }
+
+    private void setupPagination() {
+        packRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) { // check for scroll down
+                    int visibleItemCount = packLayoutManager.getChildCount();
+                    int totalItemCount = packLayoutManager.getItemCount();
+                    int pastVisibleItems = packLayoutManager.findFirstVisibleItemPosition();
+
+                    if (!isLoading && hasNextPage) {
+                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount - 10) {
+                            loadNextPage();
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Initialize packMap with initial data
+        if (stickerPackList != null) {
+            for (StickerPack pack : stickerPackList) {
+                packMap.put(pack.identifier, pack);
+            }
+        }
+    }
+
+    private void loadNextPage() {
+        isLoading = true;
+        allStickerPacksListAdapter.showLoadingFooter(true);
+        loadMoreAsyncTask = new LoadMoreAsyncTask(this);
+        loadMoreAsyncTask.execute(currentPage + 1);
+    }
+
+    static class LoadMoreAsyncTask extends AsyncTask<Integer, Void, StickerPackLoader.FetchResult> {
+        private final WeakReference<StickerPackListActivity> activityRef;
+
+        LoadMoreAsyncTask(StickerPackListActivity activity) {
+            this.activityRef = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected StickerPackLoader.FetchResult doInBackground(Integer... params) {
+            int page = params[0];
+            try {
+                StickerPackListActivity activity = activityRef.get();
+                if (activity != null) {
+                    return StickerPackLoader.fetchFromRemoteApi(page, 200, activity.packMap);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(StickerPackLoader.FetchResult result) {
+            StickerPackListActivity activity = activityRef.get();
+            if (activity != null) {
+                activity.isLoading = false;
+                activity.allStickerPacksListAdapter.showLoadingFooter(false);
+                if (result != null) {
+                    activity.currentPage++;
+                    activity.hasNextPage = result.hasNextPage;
+                    activity.originalStickerPackList = new ArrayList<>(activity.packMap.values());
+                    activity.stickerPackList = new ArrayList<>(activity.originalStickerPackList);
+                    activity.allStickerPacksListAdapter.updateData(activity.stickerPackList);
+                } else {
+                    Toast.makeText(activity, "Failed to load more stickers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
 
@@ -151,10 +372,48 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     return;
                 }
 
-                rewardedAdManager.showAd(this, rewardItem -> {
-                    addStickerPackToWhatsApp(pack.identifier, pack.name);
-                });
+                if (!StickerPackLoader.isStickerPackDownloaded(this, pack)) {
+                    showLoader();
+                    Toast.makeText(this, "Downloading stickers, please wait...", Toast.LENGTH_SHORT).show();
+                    StickerPackLoader.downloadStickers(this, pack, () -> {
+                        hideLoader();
+                        // Proceed with ad after download
+                        showAdAndAdd(pack);
+                    });
+                } else {
+                    showAdAndAdd(pack);
+                }
             };
+
+    private void showAdAndAdd(StickerPack pack) {
+        if (rewardedAdManager.isAdLoaded()) {
+            rewardedAdManager.showAd(this, rewardItem -> {
+                addStickerPackToWhatsApp(pack.identifier, pack.name);
+            });
+        } else {
+            // If ad is not ready, add the pack directly to ensure good UX, but try loading for next time
+            addStickerPackToWhatsApp(pack.identifier, pack.name);
+            rewardedAdManager.loadAd(this);
+        }
+    }
+
+    private void showLoader() {
+        if (loadingOverlay != null) {
+            loadingOverlay.setVisibility(View.VISIBLE);
+        }
+        if (shimmerFrameLayout != null) {
+            shimmerFrameLayout.startShimmer();
+        }
+    }
+
+    private void hideLoader() {
+        if (loadingOverlay != null) {
+            loadingOverlay.setVisibility(View.GONE);
+        }
+        if (shimmerFrameLayout != null) {
+            shimmerFrameLayout.stopShimmer();
+        }
+    }
 
     private boolean isInternetAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -193,7 +452,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         getMenuInflater().inflate(R.menu.menu_sticker_pack_list, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Search sticker packs...");
+        searchView.setQueryHint("Search stickers, emojis...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -213,8 +472,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if (findViewById(R.id.fragment_container).getVisibility() == View.VISIBLE) {
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
         } else {
             super.onBackPressed();
         }

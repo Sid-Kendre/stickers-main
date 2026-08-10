@@ -45,8 +45,8 @@ public class SplashActivity extends AppCompatActivity {
     // ✅ Internet check loop
     private void checkInternetAndProceed() {
         if (isInternetAvailable()) {
-            // ✅ Internet available → go to EntryActivity
-            startActivity(new Intent(SplashActivity.this, EntryActivity.class));
+            // ✅ Internet available → go to StickerPackListActivity
+            startActivity(new Intent(SplashActivity.this, StickerPackListActivity.class));
             finish();
         } else {
            Toast.makeText(this, "Internet not available", Toast.LENGTH_SHORT).show();

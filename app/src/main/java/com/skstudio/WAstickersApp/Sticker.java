@@ -16,16 +16,23 @@ import java.util.List;
 class Sticker implements Parcelable {
     final String imageFileName;
     final List<String> emojis;
+    final String imageUrl;
     long size;
 
     Sticker(String imageFileName, List<String> emojis) {
+        this(imageFileName, emojis, null);
+    }
+
+    Sticker(String imageFileName, List<String> emojis, String imageUrl) {
         this.imageFileName = imageFileName;
         this.emojis = emojis;
+        this.imageUrl = imageUrl;
     }
 
     private Sticker(Parcel in) {
         imageFileName = in.readString();
         emojis = in.createStringArrayList();
+        imageUrl = in.readString();
         size = in.readLong();
     }
 
@@ -54,6 +61,7 @@ class Sticker implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(imageFileName);
         dest.writeStringList(emojis);
+        dest.writeString(imageUrl);
         dest.writeLong(size);
     }
 }

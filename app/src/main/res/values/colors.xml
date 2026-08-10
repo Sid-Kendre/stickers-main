@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Modern Sticker App Palette -->
-    <color name="colorPrimary">#00A884</color> <!-- Brighter, modern green -->
-    <color name="colorPrimaryDark">#008069</color>
-    <color name="colorPrimaryLight">#25D366</color>
-    <color name="colorAccent">#00A884</color>
+    <!-- Romantic Love Sticker App Palette -->
+    <color name="colorPrimary">#FF4B6E</color> <!-- Vibrant Pink/Red -->
+    <color name="colorPrimaryDark">#E63E5E</color>
+    <color name="colorPrimaryLight">#FF8099</color>
+    <color name="colorAccent">#FF4B6E</color>
 
-    <color name="background">#F0F2F5</color>
+    <color name="background">#FFF5F7</color> <!-- Soft pinkish background -->
     <color name="surface">#FFFFFF</color>
 
-    <color name="textPrimary">#111B21</color>
-    <color name="textSecondary">#667781</color>
+    <color name="textPrimary">#2D3436</color>
+    <color name="textSecondary">#636E72</color>
 
-    <color name="inactiveAddButtonColor">#AEBAC1</color>
-    <color name="infoPageBackgroundColor">#F0F2F5</color>
-    <color name="actionBarArrowColor">#111B21</color>
-    <color name="animatedStickerIndicator">#8000A884</color>
+    <color name="inactiveAddButtonColor">#DFE6E9</color>
+    <color name="infoPageBackgroundColor">#FFF5F7</color>
+    <color name="actionBarArrowColor">#2D3436</color>
+    <color name="animatedStickerIndicator">#80FF4B6E</color>
 
     <color name="card_background">#FFFFFF</color>
-    <color name="divider">#E9EDEF</color>
+    <color name="divider">#FFE0E6</color>
 
     <!-- Additional UI Colors -->
-    <color name="rippleColor">#1A00A884</color>
+    <color name="rippleColor">#1AFF4B6E</color>
+    <color name="category_chip_background">#FFE0E6</color>
+    <color name="category_chip_text">#FF4B6E</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -14,7 +14,11 @@
     <queries>
         <package android:name="com.whatsapp" />
         <package android:name="com.whatsapp.w4b" />
-        <provider android:authorities="com.google.android.apps.turbo.estimated_time_remaining" />
+        <intent>
+            <action android:name="com.whatsapp.intent.action.ENABLE_STICKER_PACK" />
+        </intent>
+        <provider android:authorities="com.whatsapp.provider.sticker_whitelist_check" />
+        <provider android:authorities="com.whatsapp.w4b.provider.sticker_whitelist_check" />
     </queries>
 
     <application
@@ -45,12 +49,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6979979912689100~2520356241" />
 
-        <activity
-            android:name=".EntryActivity"
-            android:exported="true">
 
-        </activity>
         <activity android:name=".StickerPackListActivity" />
+
         <activity
             android:name=".StickerPackDetailsActivity"
             android:parentActivityName=".StickerPackListActivity"
@@ -75,6 +76,16 @@
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.whatsapp.sticker.READ" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

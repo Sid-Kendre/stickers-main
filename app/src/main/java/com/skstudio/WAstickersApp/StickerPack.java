@@ -16,10 +16,11 @@ import com.skstudio.WAstickersApp.Sticker;
 import java.util.List;
 
 class StickerPack implements Parcelable {
-    final String identifier;
-    final String name;
-    final String publisher;
-    final String trayImageFile;
+    String identifier;
+    String name;
+    String publisher;
+    String trayImageFile;
+    final String trayImageUrl;
     final String publisherEmail;
     final String publisherWebsite;
     final String privacyPolicyWebsite;
@@ -27,6 +28,8 @@ class StickerPack implements Parcelable {
     final String imageDataVersion;
     final boolean avoidCache;
     final boolean animatedStickerPack;
+    String category;
+    boolean isTrending;
 
     String iosAppStoreLink;
     private List<Sticker> stickers;
@@ -35,10 +38,15 @@ class StickerPack implements Parcelable {
     private boolean isWhitelisted;
 
     StickerPack(String identifier, String name, String publisher, String trayImageFile, String publisherEmail, String publisherWebsite, String privacyPolicyWebsite, String licenseAgreementWebsite, String imageDataVersion, boolean avoidCache, boolean animatedStickerPack) {
+        this(identifier, name, publisher, trayImageFile, null, publisherEmail, publisherWebsite, privacyPolicyWebsite, licenseAgreementWebsite, imageDataVersion, avoidCache, animatedStickerPack);
+    }
+
+    StickerPack(String identifier, String name, String publisher, String trayImageFile, String trayImageUrl, String publisherEmail, String publisherWebsite, String privacyPolicyWebsite, String licenseAgreementWebsite, String imageDataVersion, boolean avoidCache, boolean animatedStickerPack) {
         this.identifier = identifier;
         this.name = name;
         this.publisher = publisher;
         this.trayImageFile = trayImageFile;
+        this.trayImageUrl = trayImageUrl;
         this.publisherEmail = publisherEmail;
         this.publisherWebsite = publisherWebsite;
         this.privacyPolicyWebsite = privacyPolicyWebsite;
@@ -61,6 +69,7 @@ class StickerPack implements Parcelable {
         name = in.readString();
         publisher = in.readString();
         trayImageFile = in.readString();
+        trayImageUrl = in.readString();
         publisherEmail = in.readString();
         publisherWebsite = in.readString();
         privacyPolicyWebsite = in.readString();
@@ -73,6 +82,8 @@ class StickerPack implements Parcelable {
         imageDataVersion = in.readString();
         avoidCache = in.readByte() != 0;
         animatedStickerPack = in.readByte() != 0;
+        category = in.readString();
+        isTrending = in.readByte() != 0;
     }
 
     public static final Creator<StickerPack> CREATOR = new Creator<StickerPack>() {
@@ -122,6 +133,7 @@ class StickerPack implements Parcelable {
         dest.writeString(name);
         dest.writeString(publisher);
         dest.writeString(trayImageFile);
+        dest.writeString(trayImageUrl);
         dest.writeString(publisherEmail);
         dest.writeString(publisherWebsite);
         dest.writeString(privacyPolicyWebsite);
@@ -134,5 +146,7 @@ class StickerPack implements Parcelable {
         dest.writeString(imageDataVersion);
         dest.writeByte((byte) (avoidCache ? 1 : 0));
         dest.writeByte((byte) (animatedStickerPack ? 1 : 0));
+        dest.writeString(category);
+        dest.writeByte((byte) (isTrending ? 1 : 0));
     }
 }
