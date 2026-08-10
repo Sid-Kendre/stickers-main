@@ -16,7 +16,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -29,6 +33,7 @@ class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
     final ImageButton favoriteButton;
     final ImageView animatedStickerPackIndicator;
     final LinearLayout imageRowView;
+    final List<SimpleDraweeView> stickerImages;
 
     StickerPackListItemViewHolder(final View itemView) {
         super(itemView);
@@ -41,5 +46,12 @@ class StickerPackListItemViewHolder extends RecyclerView.ViewHolder {
         favoriteButton = itemView.findViewById(R.id.favorite_button);
         imageRowView = itemView.findViewById(R.id.sticker_packs_list_item_image_list);
         animatedStickerPackIndicator = itemView.findViewById(R.id.sticker_pack_animation_indicator);
+        
+        stickerImages = new ArrayList<>();
+        stickerImages.add(itemView.findViewById(R.id.sticker_img_1));
+        stickerImages.add(itemView.findViewById(R.id.sticker_img_2));
+        stickerImages.add(itemView.findViewById(R.id.sticker_img_3));
+        stickerImages.add(itemView.findViewById(R.id.sticker_img_4));
+        stickerImages.add(itemView.findViewById(R.id.sticker_img_5));
     }
 }

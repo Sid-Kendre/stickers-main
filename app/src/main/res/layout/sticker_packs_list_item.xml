@@ -115,7 +115,52 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@id/add_button_on_list"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sticker_pack_meta" />
+            app:layout_constraintTop_toBottomOf="@id/sticker_pack_meta">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sticker_img_1"
+                style="@style/sticker_packs_list_item_image_style"
+                android:layout_width="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_height="@dimen/sticker_pack_list_item_preview_image_size"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sticker_img_2"
+                style="@style/sticker_packs_list_item_image_style"
+                android:layout_width="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_height="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sticker_img_3"
+                style="@style/sticker_packs_list_item_image_style"
+                android:layout_width="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_height="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sticker_img_4"
+                style="@style/sticker_packs_list_item_image_style"
+                android:layout_width="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_height="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sticker_img_5"
+                style="@style/sticker_packs_list_item_image_style"
+                android:layout_width="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_height="@dimen/sticker_pack_list_item_preview_image_size"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/favorite_button"

@@ -47,6 +47,11 @@
         <item name="android:textColor">@color/textSecondary</item>
     </style>
 
+    <style name="sticker_packs_list_item_image_style">
+        <item name="android:padding">@dimen/sticker_pack_list_item_preview_image_padding</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
     <style name="sticker_packs_list_item_title_style">
         <item name="android:gravity">center_vertical</item>
         <item name="android:maxLines">1</item>

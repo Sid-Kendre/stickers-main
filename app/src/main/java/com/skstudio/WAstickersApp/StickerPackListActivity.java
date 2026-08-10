@@ -64,10 +64,13 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private View errorStateView;
     private int currentPage = 1;
     private boolean isLoading = false;
+    private int loadAttemptCount = 0;
     private boolean hasNextPage = true;
     private java.util.Map<String, StickerPack> packMap = new java.util.LinkedHashMap<>();
     private LoadMoreAsyncTask loadMoreAsyncTask;
     private RefreshAsyncTask refreshAsyncTask;
+    private final android.os.Handler slowLoadingHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+    private Runnable slowLoadingRunnable;
 
     private List<StickerPack> originalStickerPackList;
     private View emptyStateView;
@@ -205,27 +208,45 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             return;
         }
         isLoading = true;
+        loadAttemptCount++;
         currentPage = 1;
         hasNextPage = true;
         if (errorStateView != null) errorStateView.setVisibility(View.GONE);
         if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
         showLoader(); // Show Shimmer
         
-        // Start a 5-second timer to stop shimmer and show Refresh button if stickers haven't loaded
-        new android.os.Handler().postDelayed(() -> {
-            if (isLoading && (originalStickerPackList == null || originalStickerPackList.isEmpty())) {
-                isLoading = false; // Allow retry
-                hideLoader();
-                if (errorStateView != null) {
-                    errorStateView.setVisibility(View.VISIBLE);
-                    TextView errorText = errorStateView.findViewById(R.id.error_state_text);
-                    TextView errorHint = errorStateView.findViewById(R.id.error_state_hint);
-                    if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
-                    if (errorHint != null) errorHint.setText(R.string.error_hint);
+        // Show the message immediately whenever shimmer is shown for loading packs
+        Toast.makeText(this, R.string.loading_footer_message, Toast.LENGTH_LONG).show();
+
+        // Start a 5-second timer to handle slow loading
+        if (slowLoadingRunnable != null) {
+            slowLoadingHandler.removeCallbacks(slowLoadingRunnable);
+        }
+        slowLoadingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (isLoading && (originalStickerPackList == null || originalStickerPackList.isEmpty())) {
+                    if (loadAttemptCount <= 1) {
+                        // First time, show retry button
+                        isLoading = false; // Allow retry
+                        hideLoader();
+                        if (errorStateView != null) {
+                            errorStateView.setVisibility(View.VISIBLE);
+                            TextView errorText = errorStateView.findViewById(R.id.error_state_text);
+                            TextView errorHint = errorStateView.findViewById(R.id.error_state_hint);
+                            if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
+                            if (errorHint != null) errorHint.setText(R.string.error_hint);
+                        }
+                        swipeRefreshLayout.setVisibility(View.GONE);
+                    } else {
+                        // Subsequent attempts: keep shimmer and show toast again
+                        Toast.makeText(StickerPackListActivity.this, R.string.loading_footer_message, Toast.LENGTH_LONG).show();
+                        slowLoadingHandler.postDelayed(this, 5000);
+                    }
                 }
-                swipeRefreshLayout.setVisibility(View.GONE);
             }
-        }, 5000);
+        };
+        slowLoadingHandler.postDelayed(slowLoadingRunnable, 5000);
 
         if (refreshAsyncTask != null && !refreshAsyncTask.isCancelled()) {
             refreshAsyncTask.cancel(true);
@@ -261,8 +282,12 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             if (activity != null) {
                 activity.isLoading = false;
                 activity.swipeRefreshLayout.setRefreshing(false);
+                if (activity.slowLoadingRunnable != null) {
+                    activity.slowLoadingHandler.removeCallbacks(activity.slowLoadingRunnable);
+                }
                 
                 if (result != null && result.stickerPacks != null && !result.stickerPacks.isEmpty()) {
+                    activity.loadAttemptCount = 0; // Reset on success
                     activity.hideLoader(); // Hide Shimmer immediately on success
                     if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.GONE);
                     activity.swipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -277,18 +302,28 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     // Save to cache
                     StickerPackLoader.saveRemotePacks(activity, activity.originalStickerPackList);
                 } else if (activity.originalStickerPackList == null || activity.originalStickerPackList.isEmpty()) {
-                    // Show error state only if we don't have any data yet
-                    if (activity.errorStateView != null) {
-                        activity.errorStateView.setVisibility(View.VISIBLE);
-                        TextView errorText = activity.errorStateView.findViewById(R.id.error_state_text);
-                        TextView errorHint = activity.errorStateView.findViewById(R.id.error_state_hint);
-                        if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
-                        if (errorHint != null) errorHint.setText(R.string.error_hint);
+                    // Show error state only if it's the first attempt or if not loading slowly
+                    if (activity.loadAttemptCount <= 1) {
+                        if (activity.errorStateView != null) {
+                            activity.errorStateView.setVisibility(View.VISIBLE);
+                            TextView errorText = activity.errorStateView.findViewById(R.id.error_state_text);
+                            TextView errorHint = activity.errorStateView.findViewById(R.id.error_state_hint);
+                            if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
+                            if (errorHint != null) errorHint.setText(R.string.error_hint);
+                        }
+                        activity.swipeRefreshLayout.setVisibility(View.GONE);
+                    } else {
+                        // If it failed after multiple retries, we might still want to show error,
+                        // but the user's requirement says "just show Stickers are loading slowly"
+                        // which is handled by the timer. If it actually fails, we'll show a toast and retry
+                        Toast.makeText(activity, R.string.failed_to_load_stickers, Toast.LENGTH_SHORT).show();
+                        activity.refreshStickerPacks();
                     }
-                    activity.swipeRefreshLayout.setVisibility(View.GONE);
-                    Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
+                    if (activity.loadAttemptCount > 1) {
+                        activity.refreshStickerPacks();
+                    }
                 }
             }
         }
@@ -341,6 +376,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         if (refreshAsyncTask != null && !refreshAsyncTask.isCancelled()) {
             refreshAsyncTask.cancel(true);
         }
+        if (slowLoadingRunnable != null) {
+            slowLoadingHandler.removeCallbacks(slowLoadingRunnable);
+        }
     }
 
     private void filterByCategory(String category) {
@@ -386,7 +424,6 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         }
         if (allStickerPacksListAdapter != null) {
             allStickerPacksListAdapter.setData(stickerPackList);
-            allStickerPacksListAdapter.notifyDataSetChanged();
         }
         updateActionBarTitle();
     }
@@ -705,6 +742,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             }
             for (StickerPack stickerPack : stickerPackArray) {
                 stickerPack.setIsWhitelisted(WhitelistCheck.isWhitelisted(stickerPackListActivity, stickerPack.identifier));
+                stickerPack.setIsDownloaded(StickerPackLoader.isStickerPackDownloaded(stickerPackListActivity, stickerPack));
             }
             return Arrays.asList(stickerPackArray);
         }
@@ -713,8 +751,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         protected void onPostExecute(List<StickerPack> stickerPackList) {
             final StickerPackListActivity stickerPackListActivity = stickerPackListActivityWeakReference.get();
             if (stickerPackListActivity != null) {
-                stickerPackListActivity.allStickerPacksListAdapter.setStickerPackList(stickerPackList);
-                stickerPackListActivity.allStickerPacksListAdapter.notifyDataSetChanged();
+                stickerPackListActivity.allStickerPacksListAdapter.updateData(stickerPackList);
             }
         }
     }

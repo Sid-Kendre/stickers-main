@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,6 +32,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_ITEM = 0;
@@ -51,6 +53,58 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.stickerPacks = new ArrayList<>(stickerPacks);
         this.stickerPacksFull = new ArrayList<>(stickerPacks);
         this.onAddButtonClickedListener = onAddButtonClickedListener;
+    }
+
+    public void updateData(List<StickerPack> newList) {
+        if (newList == null) {
+            int size = this.stickerPacks.size();
+            this.stickerPacks = new ArrayList<>();
+            this.stickerPacksFull = new ArrayList<>();
+            notifyItemRangeRemoved(0, size);
+            return;
+        }
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new StickerPackDiffCallback(this.stickerPacks, newList));
+        this.stickerPacks.clear();
+        this.stickerPacks.addAll(newList);
+        this.stickerPacksFull = new ArrayList<>(newList);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+    private static class StickerPackDiffCallback extends DiffUtil.Callback {
+        private final List<StickerPack> oldList;
+        private final List<StickerPack> newList;
+
+        StickerPackDiffCallback(List<StickerPack> oldList, List<StickerPack> newList) {
+            this.oldList = oldList;
+            this.newList = newList;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return oldList.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return newList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return Objects.equals(oldList.get(oldItemPosition).identifier, newList.get(newItemPosition).identifier);
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            StickerPack oldPack = oldList.get(oldItemPosition);
+            StickerPack newPack = newList.get(newItemPosition);
+            return Objects.equals(oldPack.identifier, newPack.identifier) &&
+                    Objects.equals(oldPack.name, newPack.name) &&
+                    oldPack.getIsWhitelisted() == newPack.getIsWhitelisted() &&
+                    oldPack.isDownloaded() == newPack.isDownloaded() &&
+                    oldPack.animatedStickerPack == newPack.animatedStickerPack;
+        }
     }
 
     @Override
@@ -99,19 +153,25 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_DATA, pack);
                 view.getContext().startActivity(intent);
             });
-            viewHolder.imageRowView.removeAllViews();
             //if this sticker pack contains less stickers than the max, then take the smaller size.
             int actualNumberOfStickersToShow = Math.min(maxNumberOfStickersInARow, pack.getStickers().size());
-            for (int i = 0; i < actualNumberOfStickersToShow; i++) {
-                final SimpleDraweeView rowImage = (SimpleDraweeView) LayoutInflater.from(context).inflate(R.layout.sticker_packs_list_image_item, viewHolder.imageRowView, false);
-                rowImage.setImageURI(StickerPackLoader.getStickerUri(context, pack, pack.getStickers().get(i)));
-                final LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) rowImage.getLayoutParams();
-                final int marginBetweenImages = minMarginBetweenImages - lp.leftMargin - lp.rightMargin;
-                if (i != actualNumberOfStickersToShow - 1 && marginBetweenImages > 0) { //do not set the margin for the last image
-                    lp.setMargins(lp.leftMargin, lp.topMargin, lp.rightMargin + marginBetweenImages, lp.bottomMargin);
+            for (int i = 0; i < viewHolder.stickerImages.size(); i++) {
+                SimpleDraweeView rowImage = viewHolder.stickerImages.get(i);
+                if (i < actualNumberOfStickersToShow) {
+                    rowImage.setVisibility(View.VISIBLE);
+                    rowImage.setImageURI(StickerPackLoader.getStickerUri(context, pack, pack.getStickers().get(i)));
+                    
+                    // Apply dynamic margins
+                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) rowImage.getLayoutParams();
+                    if (i == 0) {
+                        lp.leftMargin = 0;
+                    } else {
+                        lp.leftMargin = minMarginBetweenImages;
+                    }
                     rowImage.setLayoutParams(lp);
+                } else {
+                    rowImage.setVisibility(View.GONE);
                 }
-                viewHolder.imageRowView.addView(rowImage);
             }
             setAddButtonAppearance(viewHolder.addButton, pack);
             viewHolder.animatedStickerPackIndicator.setVisibility(pack.animatedStickerPack ? View.VISIBLE : View.GONE);
@@ -185,33 +245,11 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void setData(List<StickerPack> newList) {
-        if (newList == null) {
-            this.stickerPacks = new ArrayList<>();
-        } else {
-            this.stickerPacks = new ArrayList<>(newList);
-        }
-        // Note: we don't update stickerPacksFull here because that represents the source list
-        // which might be different during category filtering.
+        updateData(newList);
     }
 
-    public void updateData(List<StickerPack> newList) {
-        if (newList == null) {
-            this.stickerPacks = new ArrayList<>();
-            this.stickerPacksFull = new ArrayList<>();
-            notifyDataSetChanged();
-            return;
-        }
-        // Simple update logic: compare sizes and notify
-        int oldSize = this.stickerPacks.size();
-        this.stickerPacks = new ArrayList<>(newList);
-        this.stickerPacksFull = new ArrayList<>(newList);
+    // Removed redundant updateData method to keep only the DiffUtil version
 
-        if (newList.size() > oldSize) {
-            notifyItemRangeInserted(oldSize, newList.size() - oldSize);
-        } else {
-            notifyDataSetChanged();
-        }
-    }
 
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
         LoadingViewHolder(View itemView) {

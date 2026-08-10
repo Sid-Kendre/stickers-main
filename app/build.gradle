@@ -9,8 +9,8 @@ android {
         applicationId "com.skstudio.WAstickersApp"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 19
-        versionName "19.1.7"
+        versionCode 20
+        versionName "20.1.7"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -78,6 +78,7 @@ dependencies {
     implementation "com.facebook.fresco:webpsupport:$fresco_version"
     implementation "com.facebook.fresco:animated-webp:$fresco_version"
     implementation "com.facebook.fresco:animated-base:$fresco_version"
+    implementation "com.facebook.fresco:imagepipeline-okhttp3:$fresco_version"
 
     // Explicitly add SoLoader to avoid versioning issues
     implementation 'com.facebook.soloader:soloader:0.12.1'

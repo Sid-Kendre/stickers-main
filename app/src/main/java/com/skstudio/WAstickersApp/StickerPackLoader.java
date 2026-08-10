@@ -575,8 +575,7 @@ class StickerPackLoader {
     }
 
     static Uri getStickerUri(Context context, StickerPack pack, Sticker sticker) {
-        File file = new File(context.getFilesDir(), "stickers/" + pack.identifier + "/" + sticker.imageFileName);
-        if (file.exists()) {
+        if (pack.isDownloaded()) {
             return getStickerAssetUri(pack.identifier, sticker.imageFileName);
         }
         if (!TextUtils.isEmpty(sticker.imageUrl)) {
@@ -586,8 +585,7 @@ class StickerPackLoader {
     }
 
     static Uri getTrayIconUri(Context context, StickerPack pack) {
-        File file = new File(context.getFilesDir(), "stickers/" + pack.identifier + "/" + pack.trayImageFile);
-        if (file.exists()) {
+        if (pack.isDownloaded()) {
             return getStickerAssetUri(pack.identifier, pack.trayImageFile);
         }
         if (!TextUtils.isEmpty(pack.trayImageUrl)) {
