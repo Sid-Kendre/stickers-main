@@ -67,6 +67,7 @@ public class StickerPackListActivity extends AddStickerPackActivity {
     private boolean hasNextPage = true;
     private java.util.Map<String, StickerPack> packMap = new java.util.LinkedHashMap<>();
     private LoadMoreAsyncTask loadMoreAsyncTask;
+    private RefreshAsyncTask refreshAsyncTask;
 
     private List<StickerPack> originalStickerPackList;
     private View emptyStateView;
@@ -206,8 +207,31 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         isLoading = true;
         currentPage = 1;
         hasNextPage = true;
+        if (errorStateView != null) errorStateView.setVisibility(View.GONE);
+        if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
         showLoader(); // Show Shimmer
-        new RefreshAsyncTask(this).execute();
+        
+        // Start a 5-second timer to stop shimmer and show Refresh button if stickers haven't loaded
+        new android.os.Handler().postDelayed(() -> {
+            if (isLoading && (originalStickerPackList == null || originalStickerPackList.isEmpty())) {
+                isLoading = false; // Allow retry
+                hideLoader();
+                if (errorStateView != null) {
+                    errorStateView.setVisibility(View.VISIBLE);
+                    TextView errorText = errorStateView.findViewById(R.id.error_state_text);
+                    TextView errorHint = errorStateView.findViewById(R.id.error_state_hint);
+                    if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
+                    if (errorHint != null) errorHint.setText(R.string.error_hint);
+                }
+                swipeRefreshLayout.setVisibility(View.GONE);
+            }
+        }, 5000);
+
+        if (refreshAsyncTask != null && !refreshAsyncTask.isCancelled()) {
+            refreshAsyncTask.cancel(true);
+        }
+        refreshAsyncTask = new RefreshAsyncTask(this);
+        refreshAsyncTask.execute();
     }
 
     static class RefreshAsyncTask extends AsyncTask<Void, Void, StickerPackLoader.FetchResult> {
@@ -237,8 +261,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
             if (activity != null) {
                 activity.isLoading = false;
                 activity.swipeRefreshLayout.setRefreshing(false);
-                activity.hideLoader(); // Hide Shimmer
+                
                 if (result != null && result.stickerPacks != null && !result.stickerPacks.isEmpty()) {
+                    activity.hideLoader(); // Hide Shimmer immediately on success
                     if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.GONE);
                     activity.swipeRefreshLayout.setVisibility(View.VISIBLE);
                     activity.packMap.clear();
@@ -253,7 +278,13 @@ public class StickerPackListActivity extends AddStickerPackActivity {
                     StickerPackLoader.saveRemotePacks(activity, activity.originalStickerPackList);
                 } else if (activity.originalStickerPackList == null || activity.originalStickerPackList.isEmpty()) {
                     // Show error state only if we don't have any data yet
-                    if (activity.errorStateView != null) activity.errorStateView.setVisibility(View.VISIBLE);
+                    if (activity.errorStateView != null) {
+                        activity.errorStateView.setVisibility(View.VISIBLE);
+                        TextView errorText = activity.errorStateView.findViewById(R.id.error_state_text);
+                        TextView errorHint = activity.errorStateView.findViewById(R.id.error_state_hint);
+                        if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
+                        if (errorHint != null) errorHint.setText(R.string.error_hint);
+                    }
                     activity.swipeRefreshLayout.setVisibility(View.GONE);
                     Toast.makeText(activity, "Failed to refresh stickers", Toast.LENGTH_SHORT).show();
                 } else {
@@ -307,6 +338,9 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         if (loadMoreAsyncTask != null && !loadMoreAsyncTask.isCancelled()) {
             loadMoreAsyncTask.cancel(true);
         }
+        if (refreshAsyncTask != null && !refreshAsyncTask.isCancelled()) {
+            refreshAsyncTask.cancel(true);
+        }
     }
 
     private void filterByCategory(String category) {
@@ -317,7 +351,19 @@ public class StickerPackListActivity extends AddStickerPackActivity {
         if (category.equals("ALL")) {
             stickerPackList = new ArrayList<>(originalStickerPackList);
             if (emptyStateView != null) emptyStateView.setVisibility(View.GONE);
-            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            if (stickerPackList.isEmpty()) {
+                swipeRefreshLayout.setVisibility(View.GONE);
+                if (errorStateView != null) {
+                    errorStateView.setVisibility(View.VISIBLE);
+                    TextView errorText = errorStateView.findViewById(R.id.error_state_text);
+                    TextView errorHint = errorStateView.findViewById(R.id.error_state_hint);
+                    if (errorText != null) errorText.setText(R.string.failed_to_load_stickers);
+                    if (errorHint != null) errorHint.setText(R.string.error_hint);
+                }
+            } else {
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                if (errorStateView != null) errorStateView.setVisibility(View.GONE);
+            }
         } else if (category.equals("FAVORITES")) {
             stickerPackList = new ArrayList<>();
             FavoriteManager fm = new FavoriteManager(this);

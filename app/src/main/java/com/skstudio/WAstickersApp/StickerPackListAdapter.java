@@ -205,7 +205,7 @@ public class StickerPackListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         int oldSize = this.stickerPacks.size();
         this.stickerPacks = new ArrayList<>(newList);
         this.stickerPacksFull = new ArrayList<>(newList);
-        
+
         if (newList.size() > oldSize) {
             notifyItemRangeInserted(oldSize, newList.size() - oldSize);
         } else {

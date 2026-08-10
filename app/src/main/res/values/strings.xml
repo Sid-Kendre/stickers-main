@@ -64,7 +64,9 @@
     <string name="retry">Retry</string>
     <string name="refresh">Refresh</string>
     <string name="failed_to_load_stickers">Failed to load stickers</string>
+    <string name="error_hint">Please check your Internet connection or try to change from Wi-Fi to mobile data.</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="settings_clear_cache">Clear Cache</string>
     <string name="cache_cleared">Cache cleared successfully</string>
+    <string name="loading_footer_message">Stickers are loading slowly. Please check your internet connection or switch to another network.</string>
 </resources>
